@@ -78,3 +78,41 @@ rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
 ```
 
 ---
+
+## TB-002 · Staging omgeving — staging.mindbodynjoy.nl
+
+### Beschrijving
+Staging subdomain ingericht zodat wijzigingen getest kunnen worden vóór live publicatie op mindbodynjoy.nl.
+
+### Architectuur
+```
+staging.mindbodynjoy.nl  ─┐
+                           ├──▶  ~/domains/mindbodynjoy.nl/public_html/staging/
+mindbodynjoy.nl/staging   ─┘
+```
+Beide URLs serveren dezelfde map — staging bereikbaar via subdomain én via pad.
+
+### Technische details
+| Gegeven | Waarde |
+|---------|--------|
+| Subdomain | `staging.mindbodynjoy.nl` |
+| Document root | `/home/u753337840/domains/mindbodynjoy.nl/public_html/staging/` |
+| DNS | ALIAS `staging` → `staging.mindbodynjoy.nl.cdn.hstgr.net.` (via hPanel) |
+| SSL | Automatisch via Hostinger CDN |
+| Alternatief pad | `https://mindbodynjoy.nl/staging/` |
+
+### Deploy naar staging
+```bash
+rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
+  /pad/naar/lokale/staging/ \
+  u753337840@92.113.19.221:~/domains/mindbodynjoy.nl/public_html/staging/
+```
+
+### Status
+- Subdomain aangemaakt in hPanel: ✅ 2026-03-18
+- DNS ALIAS record: ✅ aanwezig
+- SSL: ✅ actief via Hostinger CDN
+- Document root: ✅ `public_html/staging/`
+- Staging bereikbaar: ✅ HTTP 200 op beide URLs
+
+---
