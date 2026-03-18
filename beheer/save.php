@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
 
 // ─── Configuratie ──────────────────────────────────────────────────────────
-define('SECRET_TOKEN', 'VERVANG_DIT_MET_EEN_STERK_WACHTWOORD');
+define('SECRET_TOKEN', 'repeldildo!');
 define('CONTENT_FILE', __DIR__ . '/content.json');
 define('MAX_VERSIONS',  5);
 // ───────────────────────────────────────────────────────────────────────────

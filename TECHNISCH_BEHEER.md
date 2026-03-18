@@ -64,9 +64,17 @@ rsync -avz pad/naar/map/ mindbodynjoy:/public_html/beheer/
 - Hostname, poort en gebruikersnaam ophalen uit hPanel vóór uitvoering
 
 ### Status
-- SSH gegevens uit hPanel: **nog op te halen**
-- Key aangemaakt: **nog te doen**
-- Config ingesteld: **nog te doen**
-- Verbinding getest: **nog te doen**
+- SSH gegevens uit hPanel: ✅ `92.113.19.221:65002` / `u753337840`
+- Key aangemaakt: ✅ `~/.ssh/mindbodynjoy_hostinger` (ED25519)
+- Config ingesteld: ✅ `Host mindbodynjoy` in `~/.ssh/config`
+- Verbinding getest: ✅ wachtwoordloos verbonden op 2026-03-18
+- Beheer interface geüpload: ✅ `https://mindbodynjoy.nl/beheer/`
+
+### Upload commando (hergebruik)
+```bash
+rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
+  /Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy/beheer/ \
+  u753337840@92.113.19.221:~/domains/mindbodynjoy.nl/public_html/beheer/
+```
 
 ---
