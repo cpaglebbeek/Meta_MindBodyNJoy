@@ -17,6 +17,11 @@
         .dot { width: 8px; height: 8px; background: #34d399; border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+        /* Groepen */
+        .group-section { margin-bottom: 40px; }
+        .group-header { display: flex; align-items: center; gap: 10px; color: #475569; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 1px solid #1e293b; }
+        .group-id { background: #1e293b; color: #64748b; border: 1px solid #334155; border-radius: 6px; padding: 2px 8px; font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; }
+
         /* Auth */
         #auth-screen { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 40px; max-width: 420px; margin: 80px auto; text-align: center; }
         #auth-screen h2 { color: #a78bfa; margin-bottom: 8px; }
@@ -133,12 +138,22 @@
 </div>
 
 <script>
-const BEHEER_VERSION = 'v1.0.0';  // ← ophogen bij elke deploy van de beheer interface zelf
+const BEHEER_VERSION = 'v1.8.0';  // ← ophogen bij elke deploy van de beheer interface zelf
 const CONTENT_URL = './content.json';
 const SAVE_URL    = './save.php';
-const FIELDS      = ['missie', 'visie', 'strategie'];
-const ENVS        = { productie: { label: 'Productie', cls: 'prod', btnCls: 'btn-prod', tagCls: 'vtag-prod' },
-                      staging:   { label: 'Staging',   cls: 'stag', btnCls: 'btn-stag', tagCls: 'vtag-stag' } };
+const GROUPS = [
+    { id: 'G1', label: 'Brand Identity',    fields: ['missie', 'visie', 'strategie'] },
+    { id: 'G2', label: 'Homepage hero',     fields: ['hero_kopregel', 'hero_subtitel', 'hero_cta'] },
+    { id: 'G3', label: 'Diensten / Aanbod', fields: ['diensten_oils', 'diensten_edelstenen', 'diensten_kaarsen'] },
+    { id: 'G4', label: 'Over ons',          fields: ['over_intro', 'over_bio'] },
+    { id: 'G5', label: 'Shop / Producten',  fields: ['shop_intro', 'shop_categorie'] },
+    { id: 'G6', label: 'Contact',           fields: ['contact_intro', 'contact_adres', 'contact_openingstijden'] },
+    { id: 'G7', label: 'Footer',            fields: ['footer_tagline', 'footer_copyright'] },
+    { id: 'G8', label: 'SEO-teksten',       fields: ['seo_home_title', 'seo_home_description', 'seo_over_title', 'seo_over_description', 'seo_contact_title', 'seo_contact_description'] },
+    { id: 'G9', label: 'Globale elementen', fields: ['cta_primair', 'cta_secondair', 'cookie_tekst'] },
+];
+const ENVS = { productie: { label: 'Productie', cls: 'prod', btnCls: 'btn-prod', tagCls: 'vtag-prod' },
+               staging:   { label: 'Staging',   cls: 'stag', btnCls: 'btn-stag', tagCls: 'vtag-stag' } };
 
 let token   = '';
 let content = null;
@@ -166,7 +181,9 @@ async function loadContent() {
     try {
         const r = await fetch(CONTENT_URL + '?t=' + Date.now());
         content = await r.json();
-        FIELDS.forEach(f => { selected[f] = content.content[f].active_index.productie ?? 0; });
+        GROUPS.forEach(g => g.fields.forEach(f => {
+            if (content.content[f]) selected[f] = content.content[f].active_index.productie ?? 0;
+        }));
         renderAll();
     } catch(e) { toast('Kan content.json niet laden', 'error'); }
 }
@@ -174,7 +191,15 @@ async function loadContent() {
 function renderAll() {
     const container = document.getElementById('cards-container');
     container.innerHTML = '';
-    FIELDS.forEach(field => container.appendChild(buildCard(field)));
+    GROUPS.forEach(group => {
+        const section = document.createElement('div');
+        section.className = 'group-section';
+        section.innerHTML = `<div class="group-header"><span class="group-id">${group.id}</span>${group.label}</div>`;
+        group.fields.forEach(field => {
+            if (content.content[field]) section.appendChild(buildCard(field));
+        });
+        container.appendChild(section);
+    });
     document.getElementById('last-updated').textContent =
         'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
     document.getElementById('beheer-ver').textContent = 'Beheer ' + BEHEER_VERSION;

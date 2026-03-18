@@ -1,51 +1,178 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "last_updated": "2026-03-18T12:00:00Z",
   "content": {
+
     "missie": {
       "label": "Missie",
       "description": "Waarom bestaat MindBodyNJoy? Wat is de kern van de organisatie?",
-      "active_index": {
-        "productie": 0,
-        "staging": 0
-      },
-      "versions": [
-        {
-          "value": "",
-          "timestamp": "2026-03-18T12:00:00Z",
-          "note": "Initiële versie — nog in te vullen"
-        }
-      ]
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
     },
     "visie": {
       "label": "Visie",
       "description": "Waar wil MindBodyNJoy naartoe? Wat is de stip op de horizon?",
-      "active_index": {
-        "productie": 0,
-        "staging": 0
-      },
-      "versions": [
-        {
-          "value": "",
-          "timestamp": "2026-03-18T12:00:00Z",
-          "note": "Initiële versie — nog in te vullen"
-        }
-      ]
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
     },
     "strategie": {
       "label": "Strategie",
       "description": "Hoe realiseert MindBodyNJoy haar visie? Welke aanpak staat centraal?",
-      "active_index": {
-        "productie": 0,
-        "staging": 0
-      },
-      "versions": [
-        {
-          "value": "",
-          "timestamp": "2026-03-18T12:00:00Z",
-          "note": "Initiële versie — nog in te vullen"
-        }
-      ]
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "hero_kopregel": {
+      "label": "Kopregel",
+      "description": "Hoofdtitel op de homepage — de eerste zin die een bezoeker ziet.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "hero_subtitel": {
+      "label": "Subtitel",
+      "description": "Ondersteunende tekst onder de kopregel op de homepage.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "hero_cta": {
+      "label": "CTA-knoptekst",
+      "description": "Tekst op de call-to-action knop op de homepage (bijv. 'Ontdek ons aanbod').",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "diensten_oils": {
+      "label": "Essential Oils",
+      "description": "Titel en beschrijving van de Essential Oils sectie op de homepage.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "diensten_edelstenen": {
+      "label": "Edelstenen",
+      "description": "Titel en beschrijving van de Edelstenen sectie op de homepage.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "diensten_kaarsen": {
+      "label": "GeurKaarsen & Wierook",
+      "description": "Titel en beschrijving van de GeurKaarsen en Wierook sectie op de homepage.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "over_intro": {
+      "label": "Over ons — introductie",
+      "description": "Introductietekst bovenaan de Over ons pagina.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "over_bio": {
+      "label": "Biografie / team",
+      "description": "Beschrijving van de persoon of het team achter MindBodyNJoy.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "shop_intro": {
+      "label": "Shop — introductie",
+      "description": "Introductietekst bovenaan de shop pagina.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "shop_categorie": {
+      "label": "Shop — categoriebeschrijving",
+      "description": "Algemene beschrijving van de productcategorieën in de shop.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "contact_intro": {
+      "label": "Contact — introductie",
+      "description": "Introductietekst bovenaan de contactpagina.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "contact_adres": {
+      "label": "Contactgegevens",
+      "description": "Adres, telefoonnummer en e-mailadres van MindBodyNJoy.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "contact_openingstijden": {
+      "label": "Openingstijden",
+      "description": "Wanneer is MindBodyNJoy bereikbaar / open?",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "footer_tagline": {
+      "label": "Footer — tagline",
+      "description": "Slogan of tagline onderaan elke pagina in de footer.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "footer_copyright": {
+      "label": "Footer — copyright",
+      "description": "Copyrightmelding in de footer (bijv. '© 2025 MindBodyNJoy. Alle rechten voorbehouden.').",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "seo_home_title": {
+      "label": "SEO — Homepage title",
+      "description": "Meta title van de homepage (max. 60 tekens aanbevolen).",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "seo_home_description": {
+      "label": "SEO — Homepage description",
+      "description": "Meta description van de homepage (max. 160 tekens aanbevolen).",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "seo_over_title": {
+      "label": "SEO — Over ons title",
+      "description": "Meta title van de Over ons pagina (max. 60 tekens aanbevolen).",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "seo_over_description": {
+      "label": "SEO — Over ons description",
+      "description": "Meta description van de Over ons pagina (max. 160 tekens aanbevolen).",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "seo_contact_title": {
+      "label": "SEO — Contact title",
+      "description": "Meta title van de Contact pagina (max. 60 tekens aanbevolen).",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "seo_contact_description": {
+      "label": "SEO — Contact description",
+      "description": "Meta description van de Contact pagina (max. 160 tekens aanbevolen).",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+
+    "cta_primair": {
+      "label": "Primaire CTA",
+      "description": "Vaste call-to-action tekst die op meerdere plekken terugkomt (bijv. 'Bestel nu').",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "cta_secondair": {
+      "label": "Secundaire CTA",
+      "description": "Ondersteunende actietekst naast de primaire CTA (bijv. 'Meer weten').",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
+    },
+    "cookie_tekst": {
+      "label": "Cookie-melding",
+      "description": "Tekst van de cookiemelding die onderaan de pagina verschijnt.",
+      "active_index": { "productie": 0, "staging": 0 },
+      "versions": [{ "value": "", "timestamp": "2026-03-18T12:00:00Z", "note": "Initiële versie — nog in te vullen" }]
     }
+
   }
 }
