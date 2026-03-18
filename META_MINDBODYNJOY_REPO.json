@@ -36,7 +36,7 @@
     "language": "nl"
   },
   "domains": [
-    { "id": "functioneel_beheer", "name": "Functioneel Beheer", "description": "nader uit te werken" },
+    { "id": "functioneel_beheer", "name": "Functioneel Beheer", "file": "FUNCTIONEEL_BEHEER.md", "tasks": ["FB-001: Aanpassen missie, visie en/of strategie tekst"] },
     { "id": "technisch_beheer", "name": "Technisch Beheer", "description": "nader uit te werken" },
     { "id": "functioneel_ontwerp", "name": "Functioneel Ontwerp", "description": "nader uit te werken" },
     { "id": "technisch_ontwerp", "name": "Technisch Ontwerp", "description": "nader uit te werken" }
