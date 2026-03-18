@@ -1,7 +1,7 @@
 {
   "ecosystem": "MindBodyNJoy",
   "master_project": "Meta_MindBodyNJoy",
-  "last_updated": "2026-03-18T22:50:00Z",
+  "last_updated": "2026-03-18T23:30:00Z",
   "projects": [
     {
       "id": "meta",
@@ -10,8 +10,8 @@
       "local_path": "/Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy",
       "github": "https://github.com/cpaglebbeek/Meta_MindBodyNJoy.git",
       "branch": "main",
-      "version": "1.1.0",
-      "codename": "Eucalyptus",
+      "version": "1.2.0",
+      "codename": "Bergamot",
       "status": "active"
     },
     {
@@ -23,6 +23,17 @@
       "branch": "main",
       "version": "1.0.0",
       "codename": "Lavendel",
+      "status": "active"
+    },
+    {
+      "id": "joyadmin",
+      "name": "JoyAdministratie",
+      "role": "Praktijk administratie & klantfacilitatie",
+      "local_path": "/Users/christian/Documents/Gemini_Projects/JoyAdministratie",
+      "github": "https://github.com/cpaglebbeek/JoyAdministratie.git",
+      "branch": "main",
+      "version": "1.0.0",
+      "codename": "Rozemarijn",
       "status": "active"
     }
   ],
