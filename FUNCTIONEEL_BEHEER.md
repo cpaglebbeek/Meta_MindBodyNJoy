@@ -27,6 +27,60 @@ Alle dynamische functionele content leeft in één JSON bestand: `content.json`.
 
 ---
 
+## Logische Groeperingen — Functionele Content (G1–G9)
+
+Alle content op mindbodynjoy.nl is ingedeeld in negen logische groepen voor functioneel beheer. Elke groep komt overeen met een functioneel onderdeel van de website.
+
+| ID | Groep | Omschrijving | Status in beheer interface |
+|----|-------|-------------|---------------------------|
+| **G1** | Brand Identity | Missie, visie, strategie | ✅ Geïmplementeerd |
+| **G2** | Homepage hero | Kopregel, subtitel, CTA-knop tekst | 🔲 Nog te implementeren |
+| **G3** | Diensten / Aanbod | Titel, beschrijving, prijs per dienst | 🔲 Nog te implementeren |
+| **G4** | Over ons | Introductietekst, bio, teamleden | 🔲 Nog te implementeren |
+| **G5** | Shop / Producten | Productteksten, categoriebeschrijvingen | 🔲 Nog te implementeren |
+| **G6** | Contact | Adres, telefoonnummer, openingstijden, intro-tekst | 🔲 Nog te implementeren |
+| **G7** | Footer | Copyright-tekst, links, social media verwijzingen | 🔲 Nog te implementeren |
+| **G8** | SEO-teksten | Meta titles, meta descriptions per pagina | 🔲 Nog te implementeren |
+| **G9** | Globale elementen | Navigatielabels, vaste CTA-teksten, cookietekst | 🔲 Nog te implementeren |
+
+> **Noot (2026-03-18):** Homepage (ID 57) bevat reeds MindBodyNJoy-eigen content. Over ons (ID 47) en Contact (ID 42) bevatten nog Elementor/Juiceito demo-content — inventarisatie G4 en G6 volgt na opschonen.
+
+---
+
+## Elementor Coexistentie — Architectuurstrategie
+
+### Uitgangspunt
+De website draait op WordPress + Elementor. Elementor beheert de **visuele lay-out, effecten en structuur** van pagina's. De beheer interface beheert **tekst-content** als single point of truth via `content.json`.
+
+### Hoe coexistentie werkt
+
+```
+[Elementor]          → lay-out, animaties, widget-structuur (onaangeroerd)
+[content.json]       → tekst per functioneel veld (missie, visie, etc.)
+[Beheer interface]   → lezen / schrijven van content.json
+[Website (JS)]       → injecteert actieve versie uit content.json in de pagina
+```
+
+- Elementor-wijzigingen **blokkeren de beheer interface niet** — ze raken andere lagen.
+- Beheer interface-wijzigingen **blokkeren Elementor niet** — content.json is orthogonaal aan Elementor layout-data (`_elementor_data` in wp_postmeta).
+
+### ACF Bridge (geplande stap)
+**Advanced Custom Fields (ACF)** wordt ingezet als brug zodra directe tekstvervanging onvoldoende is:
+1. ACF-velden worden aangemaakt per content-groep (G1–G9)
+2. Elementor widgets lezen ACF-veld-waarden (dynamic content koppeling)
+3. Beheer interface schrijft naar ACF-velden via WordPress REST API (in plaats van / naast content.json)
+4. Dit maakt Elementor-bewerking én beheer interface-bewerking simultaan mogelijk zonder conflict
+
+### Toekomstige afweging: Elementor loslaten
+Op langere termijn kan Elementor worden losgelaten als betaald onderdeel, **mits**:
+- Alle pagina's volledig beheerd worden via de eigen beheer interface
+- Visuele lay-out gecodeerd is in static HTML/CSS (buiten Elementor)
+- ACF-brug volledig operationeel is als content-laag
+
+**Beslismoment:** Na implementatie van G1–G9 in beheer interface + ACF bridge PoC.
+
+---
+
 ## FB-001 · Aanpassen missie, visie en/of strategie tekst
 
 ### Beschrijving
