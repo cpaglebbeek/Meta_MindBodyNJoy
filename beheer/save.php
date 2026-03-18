@@ -48,6 +48,11 @@ if (!isset($data['content'][$field])) {
 
 // ─── Acties ────────────────────────────────────────────────────────────────
 
+if ($action === 'ping') {
+    echo json_encode(['success' => true]);
+    exit;
+}
+
 if ($action === 'save') {
     // Nieuwe versie toevoegen — activeert NIET automatisch in een omgeving
     $new_version = [

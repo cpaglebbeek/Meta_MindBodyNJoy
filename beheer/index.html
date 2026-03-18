@@ -173,6 +173,7 @@
     <h2>Beheer toegang</h2>
     <p>Voer het beheer wachtwoord in om door te gaan.</p>
     <input type="password" id="token-input" placeholder="Wachtwoord" autocomplete="current-password">
+    <div id="auth-error" style="display:none;color:#f87171;font-size:0.82rem;margin-bottom:8px;"></div>
     <button class="btn-auth" onclick="login()">Inloggen</button>
 </div>
 
@@ -224,17 +225,33 @@ function nl2br(s) { return escapeHtml(s).replace(/\n/g,'<br>'); }
 function getActiveValue(field) { const f=content.content[field]; if(!f) return ''; return f.versions[f.active_index.productie]?.value??''; }
 
 // ── Auth ────────────────────────────────────────────────────────────────────
-function login() {
+async function login() {
     const val = document.getElementById('token-input').value.trim();
     if (!val) return;
-    token = val;
-    sessionStorage.setItem('mbnjoy_token', token);
-    document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadContent();
+    const btn = document.querySelector('.btn-auth');
+    btn.disabled = true; btn.textContent = 'Controleren...';
+    try {
+        const r = await fetch(SAVE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + val },
+            body: JSON.stringify({ action: 'ping' })
+        });
+        const json = await r.json();
+        if (!r.ok || json.error) throw new Error('Onjuist wachtwoord');
+        token = val;
+        sessionStorage.setItem('mbnjoy_token', token);
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        loadContent();
+    } catch(e) {
+        document.getElementById('auth-error').textContent = 'Onjuist wachtwoord — probeer opnieuw.';
+        document.getElementById('auth-error').style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Inloggen';
+    }
 }
 function logout() { sessionStorage.removeItem('mbnjoy_token'); location.reload(); }
 document.getElementById('token-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+document.getElementById('token-input').addEventListener('input', () => { document.getElementById('auth-error').style.display = 'none'; });
 window.addEventListener('DOMContentLoaded', () => {
     const saved = sessionStorage.getItem('mbnjoy_token');
     if (saved) { token = saved; document.getElementById('auth-screen').style.display = 'none'; document.getElementById('app').style.display = 'block'; loadContent(); }
