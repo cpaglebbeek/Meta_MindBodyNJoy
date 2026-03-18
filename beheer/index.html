@@ -106,6 +106,62 @@
         #toast.error { background: #450a0a; color: #f87171; border: 1px solid #f87171; }
 
         .divider { border: none; border-top: 1px solid #1e293b; margin: 16px 0; }
+
+        /* Active bar */
+        .active-bar { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.15); border-radius: 8px; padding: 7px 12px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px; }
+        .active-bar-label { color: #3b82f6; font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; padding-top: 1px; flex-shrink: 0; }
+        .active-bar-value { color: #64748b; font-size: 0.82rem; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+        /* Single-line input */
+        .input-single { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #f1f5f9; font-family: inherit; font-size: 0.95rem; padding: 12px 14px; transition: border-color 0.2s; }
+        .input-single:focus { outline: none; border-color: #a78bfa; }
+        .input-single.changed { border-color: #fbbf24; }
+        .input-heading { font-size: 1.1rem; font-weight: 600; }
+        textarea.ta-address { font-family: 'Courier New', monospace; font-size: 0.87rem; }
+
+        /* Preview panel */
+        .preview-panel { margin-top: 10px; background: #0a1628; border: 1px solid #1e293b; border-radius: 8px; padding: 12px 16px; }
+        .preview-label { font-size: 0.65rem; color: #334155; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 700; }
+        .preview-heading { font-size: 1.5rem; font-weight: 800; color: #f1f5f9; line-height: 1.2; }
+        .preview-subheading { font-size: 0.97rem; color: #94a3b8; line-height: 1.5; }
+        .preview-btn-demo { display: inline-block; background: #7c3aed; color: white; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; }
+        .preview-text { color: #94a3b8; line-height: 1.7; font-size: 0.9rem; }
+        .preview-address { color: #94a3b8; font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-line; }
+        .preview-copyright { color: #475569; font-size: 0.78rem; }
+        .preview-tagline { color: #a78bfa; font-style: italic; font-size: 0.97rem; }
+        .preview-seo-inline-title { font-size: 0.88rem; color: #93c5fd; font-weight: 600; }
+        .preview-seo-inline-title.over { color: #f87171; }
+        .preview-seo-inline-desc { font-size: 0.82rem; color: #64748b; }
+        .preview-seo-inline-desc.over { color: #f87171; }
+        .preview-empty { color: #334155 !important; font-style: italic; }
+
+        /* Char counter */
+        .char-row { display: flex; justify-content: flex-end; margin-top: 5px; }
+        .char-counter { font-size: 0.72rem; color: #475569; font-family: monospace; }
+        .char-counter.warning { color: #fbbf24; }
+        .char-counter.over { color: #f87171; }
+        .char-limit-bar { height: 2px; border-radius: 2px; margin-top: 3px; background: #1e293b; overflow: hidden; }
+        .char-limit-fill { height: 100%; border-radius: 2px; transition: width 0.1s, background 0.1s; }
+
+        /* Group previews */
+        .group-preview { background: #0a1628; border: 1px solid #1e293b; border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; }
+
+        /* G2 hero preview */
+        .hero-preview { text-align: center; padding: 16px 10px; }
+        .hero-preview-heading { font-size: 1.6rem; font-weight: 800; color: #f1f5f9; margin-bottom: 8px; line-height: 1.2; }
+        .hero-preview-sub { font-size: 0.92rem; color: #94a3b8; margin-bottom: 14px; }
+        .hero-preview-cta { display: inline-block; background: #7c3aed; color: white; padding: 9px 22px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; }
+        .hero-preview-cta.empty-cta { opacity: 0.3; }
+
+        /* G8 SEO snippets */
+        .seo-snippets { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+        .seo-snippet { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 11px 13px; }
+        .seo-page-label { font-size: 0.65rem; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 700; }
+        .seo-snippet-title { font-size: 0.87rem; color: #93c5fd; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+        .seo-snippet-title.over { color: #f87171; }
+        .seo-snippet-url { font-size: 0.7rem; color: #34d399; margin-bottom: 3px; }
+        .seo-snippet-desc { font-size: 0.76rem; color: #64748b; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .seo-snippet-desc.over { color: #f87171; }
     </style>
 </head>
 <body>
@@ -114,7 +170,7 @@
 
 <!-- AUTH -->
 <div id="auth-screen">
-    <h2>🔐 Beheer toegang</h2>
+    <h2>Beheer toegang</h2>
     <p>Voer het beheer wachtwoord in om door te gaan.</p>
     <input type="password" id="token-input" placeholder="Wachtwoord" autocomplete="current-password">
     <button class="btn-auth" onclick="login()">Inloggen</button>
@@ -138,7 +194,7 @@
 </div>
 
 <script>
-const BEHEER_VERSION = 'v1.8.0';  // ← ophogen bij elke deploy van de beheer interface zelf
+const BEHEER_VERSION = 'v2.0.0';
 const CONTENT_URL = './content.json';
 const SAVE_URL    = './save.php';
 const GROUPS = [
@@ -157,9 +213,17 @@ const ENVS = { productie: { label: 'Productie', cls: 'prod', btnCls: 'btn-prod',
 
 let token   = '';
 let content = null;
-let selected = {};  // { field: index } — welke versie geselecteerd in textarea
+let selected = {};  // { field: index } — welke versie geselecteerd in editor
 
-// ── Auth ───────────────────────────────────────────────────────────────────
+// ── Helper functies ─────────────────────────────────────────────────────────
+const SINGLE_LINE_TYPES = ['heading','subheading','button','seo-title','copyright','tagline'];
+function isSingleLine(type) { return SINGLE_LINE_TYPES.includes(type); }
+function escapeHtml(s) { if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escapeAttr(s) { if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function nl2br(s) { return escapeHtml(s).replace(/\n/g,'<br>'); }
+function getActiveValue(field) { const f=content.content[field]; if(!f) return ''; return f.versions[f.active_index.productie]?.value??''; }
+
+// ── Auth ────────────────────────────────────────────────────────────────────
 function login() {
     const val = document.getElementById('token-input').value.trim();
     if (!val) return;
@@ -176,7 +240,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (saved) { token = saved; document.getElementById('auth-screen').style.display = 'none'; document.getElementById('app').style.display = 'block'; loadContent(); }
 });
 
-// ── Content laden ──────────────────────────────────────────────────────────
+// ── Content laden ────────────────────────────────────────────────────────────
 async function loadContent() {
     try {
         const r = await fetch(CONTENT_URL + '?t=' + Date.now());
@@ -188,6 +252,7 @@ async function loadContent() {
     } catch(e) { toast('Kan content.json niet laden', 'error'); }
 }
 
+// ── Render alles ─────────────────────────────────────────────────────────────
 function renderAll() {
     const container = document.getElementById('cards-container');
     container.innerHTML = '';
@@ -195,17 +260,37 @@ function renderAll() {
         const section = document.createElement('div');
         section.className = 'group-section';
         section.innerHTML = `<div class="group-header"><span class="group-id">${group.id}</span>${group.label}</div>`;
+
+        // Groepspreview div voor G2 en G8 — vóór de cards
+        if (group.id === 'G2') {
+            const d = document.createElement('div');
+            d.className = 'group-preview';
+            d.id = 'group-preview-G2';
+            section.appendChild(d);
+        }
+        if (group.id === 'G8') {
+            const d = document.createElement('div');
+            d.className = 'group-preview';
+            d.id = 'group-preview-G8';
+            section.appendChild(d);
+        }
+
         group.fields.forEach(field => {
             if (content.content[field]) section.appendChild(buildCard(field));
         });
         container.appendChild(section);
     });
+
     document.getElementById('last-updated').textContent =
         'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
     document.getElementById('beheer-ver').textContent = 'Beheer ' + BEHEER_VERSION;
+
+    // Groepspreviews renderen na alle cards
+    renderG2Preview();
+    renderG8Preview();
 }
 
-// ── Card bouwen ────────────────────────────────────────────────────────────
+// ── Card bouwen ──────────────────────────────────────────────────────────────
 function buildCard(field) {
     const f    = content.content[field];
     const card = document.createElement('div');
@@ -214,21 +299,64 @@ function buildCard(field) {
 
     const selIdx  = selected[field] ?? 0;
     const selVal  = f.versions[selIdx]?.value ?? '';
-    const prodIdx = f.active_index.productie;
-    const stagIdx = f.active_index.staging;
+    const type    = f.type || 'text';
+
+    // Active bar (alleen tonen als prod active value niet leeg is)
+    const prodVal = f.versions[f.active_index.productie]?.value ?? '';
+    const activeBarHtml = prodVal
+        ? `<div class="active-bar" id="active-bar-${field}">
+            <span class="active-bar-label">Live</span>
+            <span class="active-bar-value">${escapeHtml(prodVal.replace(/\n/g,' ').substring(0,80)+(prodVal.length>80?'…':''))}</span>
+           </div>`
+        : `<div class="active-bar" id="active-bar-${field}" style="display:none">
+            <span class="active-bar-label">Live</span>
+            <span class="active-bar-value"></span>
+           </div>`;
+
+    // Editor: single-line of textarea
+    let editorHtml;
+    if (isSingleLine(type)) {
+        const extraCls = type === 'heading' ? ' input-heading' : '';
+        editorHtml = `<input type="text" id="ta-${field}" class="input-single${extraCls}" value="${escapeAttr(selVal)}" oninput="onTextChange('${field}')">`;
+    } else {
+        const extraCls = type === 'address' ? ' ta-address' : '';
+        editorHtml = `<textarea id="ta-${field}" class="${extraCls}" oninput="onTextChange('${field}')">${escapeHtml(selVal)}</textarea>`;
+    }
+
+    // Char counter (alleen voor seo-title en seo-description)
+    let charCounterHtml = '';
+    if (type === 'seo-title' || type === 'seo-description') {
+        const limit = type === 'seo-title' ? 60 : 160;
+        const len = selVal.length;
+        const pct = Math.min(100, len / limit * 100);
+        const color = len > limit ? '#f87171' : len > limit * 0.9 ? '#fbbf24' : '#34d399';
+        const cls = len > limit ? 'over' : len > limit * 0.9 ? 'warning' : '';
+        charCounterHtml = `<div class="char-row"><span class="char-counter ${cls}" id="counter-${field}">${len} / ${limit}</span></div>
+        <div class="char-limit-bar"><div class="char-limit-fill" id="charfill-${field}" style="width:${pct}%;background:${color}"></div></div>`;
+    }
+
+    // Preview panel
+    const previewContent = getPreviewHtml(type, selVal);
+    const previewHtml = (previewContent || ['heading','subheading','button'].includes(type))
+        ? `<div class="preview-panel" id="preview-${field}"><div class="preview-label">Voorbeeld</div>${previewContent}</div>`
+        : `<div class="preview-panel" id="preview-${field}" style="display:none"><div class="preview-label">Voorbeeld</div></div>`;
 
     card.innerHTML = `
         <div class="card-top">
-            <div class="card-title">${f.label}</div>
+            <div class="card-title">${escapeHtml(f.label)}</div>
             <div class="env-badges" id="badges-${field}">
                 ${envBadgeHtml(f, 'productie')}
                 ${envBadgeHtml(f, 'staging')}
             </div>
         </div>
-        <div class="card-description">${f.description}</div>
+        <div class="card-description">${escapeHtml(f.description)}</div>
 
-        <div class="editor-label">Bewerken — Versie ${selIdx + 1} geselecteerd</div>
-        <textarea id="ta-${field}" oninput="onTextChange('${field}')">${selVal}</textarea>
+        ${activeBarHtml}
+
+        <div class="editor-label" id="edlabel-${field}">Bewerken — Versie ${selIdx + 1} geselecteerd</div>
+        ${editorHtml}
+        ${charCounterHtml}
+        ${previewHtml}
 
         <div class="note-row">
             <input type="text" id="note-${field}" placeholder="Notitie bij opslaan (optioneel)">
@@ -248,6 +376,38 @@ function buildCard(field) {
     return card;
 }
 
+// ── Preview HTML genereren ───────────────────────────────────────────────────
+function getPreviewHtml(type, val) {
+    switch(type) {
+        case 'heading':
+            return `<div class="preview-heading">${val ? escapeHtml(val) : '<span class="preview-empty">Kopregel verschijnt hier...</span>'}</div>`;
+        case 'subheading':
+            return `<div class="preview-subheading">${val ? escapeHtml(val) : '<span class="preview-empty">Subtitel verschijnt hier...</span>'}</div>`;
+        case 'button':
+            return `<span class="preview-btn-demo ${!val?'preview-empty':''}">${val ? escapeHtml(val) : 'Knoptekst...'}</span>`;
+        case 'text':
+            if (!val) return '';
+            return `<div class="preview-text">${nl2br(val)}</div>`;
+        case 'address':
+            if (!val) return '';
+            return `<div class="preview-address">${escapeHtml(val)}</div>`;
+        case 'tagline':
+            return `<div class="preview-tagline">${val ? escapeHtml(val) : '<span class="preview-empty">Tagline verschijnt hier...</span>'}</div>`;
+        case 'copyright':
+            return `<div class="preview-copyright">${val ? escapeHtml(val) : '<span class="preview-empty">Copyright tekst...</span>'}</div>`;
+        case 'seo-title':
+            if (!val) return '';
+            return `<div class="preview-seo-inline-title ${val.length>60?'over':''}">${escapeHtml(val)}</div>`;
+        case 'seo-description':
+            if (!val) return '';
+            return `<div class="preview-seo-inline-desc ${val.length>160?'over':''}">${escapeHtml(val)}</div>`;
+        default:
+            if (!val) return '';
+            return `<div class="preview-text">${nl2br(val)}</div>`;
+    }
+}
+
+// ── Env badge HTML ───────────────────────────────────────────────────────────
 function envBadgeHtml(f, env) {
     const cfg = ENVS[env];
     const idx = f.active_index[env];
@@ -259,10 +419,11 @@ function envBadgeHtml(f, env) {
         <span class="env-live-dot"></span>
         <span class="env-label">${cfg.label}:</span>
         <span class="env-ver">v${idx + 1}</span>
-        <span style="color:#475569;font-size:0.72rem;font-weight:400"> · ${preview}</span>
+        <span style="color:#475569;font-size:0.72rem;font-weight:400"> · ${escapeHtml(preview)}</span>
     </div>`;
 }
 
+// ── Versie lijst bouwen ──────────────────────────────────────────────────────
 function buildVersionList(field) {
     const f       = content.content[field];
     const prodIdx = f.active_index.productie;
@@ -270,13 +431,13 @@ function buildVersionList(field) {
     const selIdx  = selected[field] ?? 0;
 
     return f.versions.map((v, i) => {
-        const isProd    = i === prodIdx;
-        const isStag    = i === stagIdx;
-        const isSel     = i === selIdx;
-        const preview   = v.value ? (v.value.length > 60 ? v.value.substring(0,60)+'…' : v.value) : null;
-        const date      = new Date(v.timestamp).toLocaleString('nl-NL');
-        const noteHtml  = v.note ? `<span class="version-note"> · ${v.note}</span>` : '';
-        const tags      = [
+        const isProd   = i === prodIdx;
+        const isStag   = i === stagIdx;
+        const isSel    = i === selIdx;
+        const preview  = v.value ? (v.value.length > 60 ? v.value.substring(0,60)+'…' : v.value) : null;
+        const date     = new Date(v.timestamp).toLocaleString('nl-NL');
+        const noteHtml = v.note ? `<span class="version-note"> · ${escapeHtml(v.note)}</span>` : '';
+        const tags     = [
             isProd ? `<span class="vtag vtag-prod">PROD</span>` : '',
             isStag ? `<span class="vtag vtag-stag">STAGING</span>` : ''
         ].join('');
@@ -284,7 +445,7 @@ function buildVersionList(field) {
         return `<div class="version-item ${isSel ? 'selected' : ''}" id="vi-${field}-${i}" onclick="selectVersion('${field}', ${i})">
             <div class="version-meta">
                 <div class="version-num">Versie ${i + 1}</div>
-                <div class="version-preview ${!preview ? 'empty' : ''}">${preview ?? '(leeg)'}</div>
+                <div class="version-preview ${!preview ? 'empty' : ''}">${preview ? escapeHtml(preview) : '(leeg)'}</div>
                 <div class="version-info">${date}${noteHtml}</div>
                 ${tags ? `<div class="version-env-tags">${tags}</div>` : ''}
             </div>
@@ -296,33 +457,89 @@ function buildVersionList(field) {
     }).join('');
 }
 
-// ── Interactie ─────────────────────────────────────────────────────────────
+// ── Interactie ──────────────────────────────────────────────────────────────
 function selectVersion(field, index) {
     selected[field] = index;
     const f   = content.content[field];
     const val = f.versions[index]?.value ?? '';
-    const ta  = document.getElementById(`ta-${field}`);
-    ta.value  = val;
-    ta.classList.remove('changed');
+    const el  = document.getElementById(`ta-${field}`);
+
+    if (el.tagName === 'TEXTAREA') {
+        el.value = val;
+    } else {
+        el.value = val;
+    }
+    el.classList.remove('changed');
     document.getElementById(`btnsave-${field}`).disabled = true;
 
-    // Editor label bijwerken
-    const lbl = document.querySelector(`#card-${field} .editor-label`);
+    // Editor label bijwerken via id
+    const lbl = document.getElementById('edlabel-'+field);
     if (lbl) lbl.textContent = `Bewerken — Versie ${index + 1} geselecteerd`;
 
     // Versie items herstijlen
-    document.querySelectorAll(`#vlist-${field} .version-item`).forEach((el, i) => {
-        el.classList.toggle('selected', i === index);
+    document.querySelectorAll(`#vlist-${field} .version-item`).forEach((item, i) => {
+        item.classList.toggle('selected', i === index);
     });
+
+    // Inline preview en char counter bijwerken
+    updateInlinePreview(field, val);
+    updateCharCounterEl(field, val);
+
+    // Groepspreview
+    const group = GROUPS.find(g => g.fields.includes(field));
+    if (group?.id === 'G2') renderG2Preview();
+    else if (group?.id === 'G8') renderG8Preview();
 }
 
 function onTextChange(field) {
-    const ta      = document.getElementById(`ta-${field}`);
-    const selIdx  = selected[field] ?? 0;
+    const el = document.getElementById('ta-' + field);
+    const val = el.value;
+    const selIdx = selected[field] ?? 0;
     const origVal = content.content[field].versions[selIdx]?.value ?? '';
-    const changed = ta.value !== origVal;
-    ta.classList.toggle('changed', changed);
-    document.getElementById(`btnsave-${field}`).disabled = !changed;
+    const changed = val !== origVal;
+    el.classList.toggle('changed', changed);
+    document.getElementById('btnsave-' + field).disabled = !changed;
+
+    // Inline preview bijwerken
+    updateInlinePreview(field, val);
+
+    // Char counter bijwerken
+    updateCharCounterEl(field, val);
+
+    // Groepspreview
+    const group = GROUPS.find(g => g.fields.includes(field));
+    if (group?.id === 'G2') renderG2Preview();
+    else if (group?.id === 'G8') renderG8Preview();
+}
+
+function updateInlinePreview(field, val) {
+    const previewEl = document.getElementById('preview-' + field);
+    if (!previewEl) return;
+    const type = content.content[field].type || 'text';
+    const html = getPreviewHtml(type, val);
+    const alwaysShow = ['heading','subheading','button'].includes(type);
+    if (html || alwaysShow) {
+        previewEl.style.display = '';
+        previewEl.innerHTML = '<div class="preview-label">Voorbeeld</div>' + html;
+    } else {
+        previewEl.style.display = 'none';
+    }
+}
+
+function updateCharCounterEl(field, val) {
+    const counter = document.getElementById('counter-' + field);
+    const fill    = document.getElementById('charfill-' + field);
+    if (!counter) return;
+    const type  = content.content[field].type;
+    const limit = type === 'seo-title' ? 60 : 160;
+    const len   = val.length;
+    counter.textContent = len + ' / ' + limit;
+    counter.className = 'char-counter ' + (len > limit ? 'over' : len > limit * 0.9 ? 'warning' : '');
+    if (fill) {
+        const pct = Math.min(100, len / limit * 100);
+        fill.style.width = pct + '%';
+        fill.style.background = len > limit ? '#f87171' : len > limit * 0.9 ? '#fbbf24' : '#34d399';
+    }
 }
 
 function toggleVersions(field) {
@@ -330,7 +547,44 @@ function toggleVersions(field) {
     document.getElementById(`vlist-${field}`).classList.toggle('open');
 }
 
-// ── Opslaan ────────────────────────────────────────────────────────────────
+// ── Groep G2 preview ─────────────────────────────────────────────────────────
+function renderG2Preview() {
+    const panel = document.getElementById('group-preview-G2');
+    if (!panel) return;
+    const k = document.getElementById('ta-hero_kopregel')?.value ?? getActiveValue('hero_kopregel');
+    const s = document.getElementById('ta-hero_subtitel')?.value ?? getActiveValue('hero_subtitel');
+    const c = document.getElementById('ta-hero_cta')?.value ?? getActiveValue('hero_cta');
+    panel.innerHTML = `<div class="preview-label">Live voorbeeld — Homepage Hero</div>
+    <div class="hero-preview">
+      <div class="hero-preview-heading">${escapeHtml(k)||'<span class="preview-empty">Kopregel...</span>'}</div>
+      <div class="hero-preview-sub">${escapeHtml(s)||'<span class="preview-empty">Subtitel...</span>'}</div>
+      <span class="hero-preview-cta ${!c?'empty-cta':''}">${escapeHtml(c)||'CTA knop...'}</span>
+    </div>`;
+}
+
+// ── Groep G8 preview ─────────────────────────────────────────────────────────
+function renderG8Preview() {
+    const panel = document.getElementById('group-preview-G8');
+    if (!panel) return;
+    const pages = [
+        {label:'Homepage', url:'mindbodynjoy.nl/', tf:'seo_home_title', df:'seo_home_description'},
+        {label:'Over ons', url:'mindbodynjoy.nl/over-ons/', tf:'seo_over_title', df:'seo_over_description'},
+        {label:'Contact',  url:'mindbodynjoy.nl/contact/', tf:'seo_contact_title', df:'seo_contact_description'},
+    ];
+    const snippets = pages.map(p => {
+        const t = document.getElementById('ta-'+p.tf)?.value ?? getActiveValue(p.tf);
+        const d = document.getElementById('ta-'+p.df)?.value ?? getActiveValue(p.df);
+        return `<div class="seo-snippet">
+            <div class="seo-page-label">${p.label}</div>
+            <div class="seo-snippet-title ${t.length>60?'over':''}">${escapeHtml(t)||p.label+' | MindBodyNJoy'}</div>
+            <div class="seo-snippet-url">${p.url}</div>
+            <div class="seo-snippet-desc ${d.length>160?'over':''}">${escapeHtml(d)||'Beschrijving nog niet ingevuld...'}</div>
+        </div>`;
+    }).join('');
+    panel.innerHTML = `<div class="preview-label">Live voorbeeld — Zoekresultaten Google</div><div class="seo-snippets">${snippets}</div>`;
+}
+
+// ── Opslaan ──────────────────────────────────────────────────────────────────
 async function saveField(field) {
     const value = document.getElementById(`ta-${field}`).value;
     const note  = document.getElementById(`note-${field}`).value.trim();
@@ -338,8 +592,8 @@ async function saveField(field) {
     btn.disabled = true; btn.textContent = 'Opslaan...';
 
     try {
-        const r    = await api({ action: 'save', field, value, note });
-        content    = r.data;
+        const r = await api({ action: 'save', field, value, note });
+        content = r.data;
         selected[field] = 0;  // nieuwe versie staat bovenaan
         document.getElementById(`note-${field}`).value = '';
         refreshCard(field);
@@ -348,7 +602,7 @@ async function saveField(field) {
     btn.textContent = 'Opslaan als nieuwe versie';
 }
 
-// ── Versie activeren ───────────────────────────────────────────────────────
+// ── Versie activeren ─────────────────────────────────────────────────────────
 async function activateVersion(field, index, env) {
     try {
         const r = await api({ action: 'activate', field, index, env });
@@ -359,31 +613,61 @@ async function activateVersion(field, index, env) {
     } catch(e) { toast('Fout: ' + e.message, 'error'); }
 }
 
-// ── Card herfresh (zonder volledige re-render) ─────────────────────────────
+// ── Card refresh (zonder volledige re-render) ────────────────────────────────
 function refreshCard(field) {
-    const f       = content.content[field];
-    const card    = document.getElementById(`card-${field}`);
+    const f    = content.content[field];
+    const card = document.getElementById(`card-${field}`);
+
     // Badges
     document.getElementById(`badges-${field}`).innerHTML =
         envBadgeHtml(f, 'productie') + envBadgeHtml(f, 'staging');
+
     // Versie toggle teller
     const toggle = document.getElementById(`toggle-${field}`);
     toggle.innerHTML = `<span class="arrow ${toggle.classList.contains('open')?'open':''}">▶</span> Versiegeschiedenis (${f.versions.length} / 5)`;
+
     // Versie lijst
     document.getElementById(`vlist-${field}`).innerHTML = buildVersionList(field);
+
     // Last updated
     document.getElementById('last-updated').textContent =
         'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
-    // Textarea
+
+    // Textarea / input
     const selIdx = selected[field] ?? 0;
-    document.getElementById(`ta-${field}`).value = f.versions[selIdx]?.value ?? '';
-    document.getElementById(`ta-${field}`).classList.remove('changed');
+    const selVal = f.versions[selIdx]?.value ?? '';
+    const el = document.getElementById(`ta-${field}`);
+    el.value = selVal;
+    el.classList.remove('changed');
     document.getElementById(`btnsave-${field}`).disabled = true;
-    const lbl = card.querySelector('.editor-label');
+
+    // Editor label
+    const lbl = document.getElementById('edlabel-' + field);
     if (lbl) lbl.textContent = `Bewerken — Versie ${selIdx + 1} geselecteerd`;
+
+    // Inline preview en char counter
+    updateInlinePreview(field, selVal);
+    updateCharCounterEl(field, selVal);
+
+    // Active bar bijwerken
+    const prodVal = f.versions[f.active_index.productie]?.value ?? '';
+    const barEl = document.getElementById('active-bar-' + field);
+    if (barEl) {
+        if (prodVal) {
+            barEl.style.display = '';
+            barEl.querySelector('.active-bar-value').textContent = prodVal.replace(/\n/g,' ').substring(0,80) + (prodVal.length > 80 ? '…' : '');
+        } else {
+            barEl.style.display = 'none';
+        }
+    }
+
+    // Groepspreview
+    const group = GROUPS.find(g => g.fields.includes(field));
+    if (group?.id === 'G2') renderG2Preview();
+    else if (group?.id === 'G8') renderG8Preview();
 }
 
-// ── API helper ─────────────────────────────────────────────────────────────
+// ── API helper ───────────────────────────────────────────────────────────────
 async function api(body) {
     const r = await fetch(SAVE_URL, {
         method: 'POST',
@@ -395,7 +679,7 @@ async function api(body) {
     return json;
 }
 
-// ── Toast ──────────────────────────────────────────────────────────────────
+// ── Toast ────────────────────────────────────────────────────────────────────
 let toastTimer;
 function toast(msg, type = 'success') {
     const el = document.getElementById('toast');
