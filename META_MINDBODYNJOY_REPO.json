@@ -1,7 +1,7 @@
 {
   "ecosystem": "MindBodyNJoy",
   "master_project": "Meta_MindBodyNJoy",
-  "last_updated": "2026-03-18T23:30:00Z",
+  "last_updated": "2026-03-19T00:00:00Z",
   "projects": [
     {
       "id": "meta",
@@ -10,8 +10,8 @@
       "local_path": "/Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy",
       "github": "https://github.com/cpaglebbeek/Meta_MindBodyNJoy.git",
       "branch": "main",
-      "version": "1.2.0",
-      "codename": "Bergamot",
+      "version": "1.3.0",
+      "codename": "Eucalyptus",
       "status": "active"
     },
     {
@@ -63,7 +63,16 @@
     },
     "max_versions_per_field": 5,
     "beheer_interface": "/beheer/index.html",
-    "save_endpoint": "/beheer/save.php"
+    "save_endpoint": "/beheer/save.php",
+    "purge_endpoint": "/beheer/purge-cache.php",
+    "beheer_version": "v2.1.0",
+    "beheer_location": "productie only — niet op staging",
+    "ci_cd": {
+      "activate": "versie actief zetten per omgeving (staging of productie)",
+      "promote": "staging actieve versie → productie (per veld)",
+      "promote_all": "alle velden staging → productie in één actie",
+      "cache_flush": "LiteSpeed purge via purge-cache.php na elke activate/promote"
+    }
   },
   "domains": [
     { "id": "functioneel_beheer", "name": "Functioneel Beheer", "file": "FUNCTIONEEL_BEHEER.md", "tasks": ["FB-001: Aanpassen missie, visie en/of strategie tekst"] },
