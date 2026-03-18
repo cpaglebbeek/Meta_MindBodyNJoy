@@ -58,6 +58,13 @@
 | Structuurwijziging | +0.1.0 | Oranje |
 | Major redesign | +1.0.0 | Rood |
 
+## Vastleggingsprotocol (Impliciet → Expliciet)
+- Alles wat gevraagd wordt of impliciet overeengekomen is (door akkoord van de gebruiker) wordt ALTIJD fysiek vastgelegd — nooit alleen in het geheugen van de AI.
+- **Vóór vastleggen:** expliciet benoemen wát er vastgelegd wordt en wáár, daarna akkoord vragen.
+- **Meta-niveau:** afspraken, protocollen, ecosysteemregels → `CLAUDE.md`, `META_MINDBODYNJOY_REPO.json`, of `versions.json` in dit metaproject.
+- **Fysiek niveau:** project-specifieke afspraken → `CLAUDE.md` of relevante config/data bestanden in het betreffende sub-project.
+- Na vastleggen: `git commit` + `git push` voor het gewijzigde project.
+
 ## "Over en uit" Protocol
 1. Sla sessie-context op in `META_MINDBODYNJOY_REPO.json` en dit bestand.
 2. `git add` + `git commit` met beschrijvende boodschap.
