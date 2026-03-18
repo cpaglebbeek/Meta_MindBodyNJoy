@@ -121,7 +121,7 @@
         <header>
             <div>
                 <h1>MindBodyNJoy Beheer</h1>
-                <div class="subtitle" id="last-updated">Laden...</div>
+                <div class="subtitle"><span id="last-updated">Laden...</span> &nbsp;·&nbsp; <span id="beheer-ver" style="color:#475569"></span></div>
             </div>
             <div style="display:flex;gap:10px;align-items:center">
                 <div class="sync-dot"><span class="dot"></span> CONTENT REPO</div>
@@ -133,6 +133,7 @@
 </div>
 
 <script>
+const BEHEER_VERSION = 'v1.0.0';  // ← ophogen bij elke deploy van de beheer interface zelf
 const CONTENT_URL = './content.json';
 const SAVE_URL    = './save.php';
 const FIELDS      = ['missie', 'visie', 'strategie'];
@@ -176,6 +177,7 @@ function renderAll() {
     FIELDS.forEach(field => container.appendChild(buildCard(field)));
     document.getElementById('last-updated').textContent =
         'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
+    document.getElementById('beheer-ver').textContent = 'Beheer ' + BEHEER_VERSION;
 }
 
 // ── Card bouwen ────────────────────────────────────────────────────────────

@@ -116,3 +116,55 @@ rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
 - Staging bereikbaar: ✅ HTTP 200 op beide URLs
 
 ---
+
+## TB-003 · Deploy beheer interface — productie + staging
+
+### Beschrijving
+Wanneer de beheer interface (`index.html`, `save.php`, `server.js`) wordt bijgewerkt, wordt deze **altijd gelijktijdig naar productie én staging gedeployed**. Versienummer wordt vóór de deploy opgehoogd in `index.html`.
+
+### Trigger
+- Nieuwe content-groepen toegevoegd (G2–G9 uitrol)
+- Bugfix of UX-aanpassing in de beheer interface
+- Wijziging in `save.php` of `server.js`
+
+### Procedure
+
+**Stap 1 — Versienummer ophogen in `index.html`**
+```js
+const BEHEER_VERSION = 'v1.x.x';  // ← ophogen conform semantisch schema
+```
+| Wijziging | Increment |
+|-----------|-----------|
+| Nieuwe content-groep (G2–G9) | +0.1.0 |
+| Minor fix / UX-tweak | +0.0.1 |
+| Major herontwerp beheer interface | +1.0.0 |
+
+**Stap 2 — Deploy naar productie**
+```bash
+rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
+  /Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy/beheer/ \
+  u753337840@92.113.19.221:~/domains/mindbodynjoy.nl/public_html/beheer/
+```
+
+**Stap 3 — Deploy naar staging**
+```bash
+rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
+  /Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy/beheer/ \
+  u753337840@92.113.19.221:~/domains/mindbodynjoy.nl/public_html/staging/beheer/
+```
+
+**Stap 4 — Verificatie**
+- https://mindbodynjoy.nl/beheer/ → versienummer in footer/header controleren
+- https://staging.mindbodynjoy.nl/beheer/ → idem
+
+**Stap 5 — Git commit + push**
+```bash
+git add beheer/ && git commit -m "deploy: beheer interface vX.X.X — [omschrijving]"
+git push
+```
+
+### Status
+- TB-003 procedure: ✅ gedefinieerd
+- Eerste deploy naar staging: zie TB-002 uitvoering
+
+---
