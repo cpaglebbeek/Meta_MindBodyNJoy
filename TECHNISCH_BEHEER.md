@@ -108,12 +108,35 @@ rsync -avz -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
   u753337840@92.113.19.221:~/domains/mindbodynjoy.nl/public_html/staging/
 ```
 
+### Staging database
+| Gegeven | Waarde |
+|---------|--------|
+| DB naam | `u753337840_staging` |
+| DB gebruiker | `u753337840_staging` |
+| DB host | `127.0.0.1` |
+
+### Staging wp-config.php afwijkingen van productie
+- `DB_NAME` → `u753337840_staging`
+- `DB_USER` → `u753337840_staging`
+- `DB_PASSWORD` → staging wachtwoord
+- `WP_CACHE` → `false`
+- `WP_HOME` + `WP_SITEURL` → `https://staging.mindbodynjoy.nl`
+
+### Staging refreshen (productie → staging kopiëren)
+```bash
+# 1. DB dump productie → import staging (server-side via PHP options-file)
+# 2. rsync bestanden (--exclude staging --exclude wp-config.php)
+# 3. URLs updaten: UPDATE wp_options siteurl/home → https://staging.mindbodynjoy.nl
+# Zie TB-004 voor volledig commando
+```
+
 ### Status
 - Subdomain aangemaakt in hPanel: ✅ 2026-03-18
 - DNS ALIAS record: ✅ aanwezig
 - SSL: ✅ actief via Hostinger CDN
 - Document root: ✅ `public_html/staging/`
-- Staging bereikbaar: ✅ HTTP 200 op beide URLs
+- WordPress-kopie live: ✅ 2026-03-18
+- Staging bereikbaar als volledige WP-site: ✅ `https://staging.mindbodynjoy.nl`
 
 ---
 
