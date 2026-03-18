@@ -64,7 +64,7 @@ De volgende taakvelden zijn erkend binnen het MindBodyNJoy ecosysteem. Inhoud pe
 | Domein | Status |
 |--------|--------|
 | **Functioneel Beheer** | Zie `FUNCTIONEEL_BEHEER.md` |
-| **Technisch Beheer** | *(nader uit te werken)* |
+| **Technisch Beheer** | Zie `TECHNISCH_BEHEER.md` |
 | **Functioneel Ontwerp** | *(nader uit te werken)* |
 | **Technisch Ontwerp** | *(nader uit te werken)* |
 
