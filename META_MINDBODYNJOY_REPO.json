@@ -1,7 +1,7 @@
 {
   "ecosystem": "MindBodyNJoy",
   "master_project": "Meta_MindBodyNJoy",
-  "last_updated": "2026-03-18T00:00:00Z",
+  "last_updated": "2026-03-18T12:00:00Z",
   "projects": [
     {
       "id": "meta",
@@ -35,6 +35,12 @@
     "hosting": "Hostinger",
     "language": "nl"
   },
+  "domains": [
+    { "id": "functioneel_beheer", "name": "Functioneel Beheer", "description": "nader uit te werken" },
+    { "id": "technisch_beheer", "name": "Technisch Beheer", "description": "nader uit te werken" },
+    { "id": "functioneel_ontwerp", "name": "Functioneel Ontwerp", "description": "nader uit te werken" },
+    { "id": "technisch_ontwerp", "name": "Technisch Ontwerp", "description": "nader uit te werken" }
+  ],
   "versioning": {
     "theme": "Wellness / aromatherapie begrippen",
     "green": "+0.0.1",

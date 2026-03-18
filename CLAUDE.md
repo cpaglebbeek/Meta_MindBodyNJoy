@@ -58,6 +58,16 @@
 | Structuurwijziging | +0.1.0 | Oranje |
 | Major redesign | +1.0.0 | Rood |
 
+## Beheerdomeinen
+De volgende taakvelden zijn erkend binnen het MindBodyNJoy ecosysteem. Inhoud per domein wordt later uitgewerkt.
+
+| Domein | Status |
+|--------|--------|
+| **Functioneel Beheer** | *(nader uit te werken)* |
+| **Technisch Beheer** | *(nader uit te werken)* |
+| **Functioneel Ontwerp** | *(nader uit te werken)* |
+| **Technisch Ontwerp** | *(nader uit te werken)* |
+
 ## Vastleggingsprotocol (Impliciet → Expliciet)
 - Alles wat gevraagd wordt of impliciet overeengekomen is (door akkoord van de gebruiker) wordt ALTIJD fysiek vastgelegd — nooit alleen in het geheugen van de AI.
 - **Vóór vastleggen:** expliciet benoemen wát er vastgelegd wordt en wáár, daarna akkoord vragen.
