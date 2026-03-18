@@ -6,259 +6,108 @@
     <title>MindBodyNJoy — Functioneel Beheer</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #0f172a;
-            color: #f1f5f9;
-            min-height: 100vh;
-            padding: 24px;
-        }
-
-        .container { max-width: 860px; margin: 0 auto; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f1f5f9; min-height: 100vh; padding: 24px; }
+        .container { max-width: 900px; margin: 0 auto; }
 
         /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+        header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
         h1 { color: #a78bfa; font-size: 1.5rem; letter-spacing: 1.5px; text-transform: uppercase; }
         .subtitle { color: #64748b; font-size: 0.85rem; margin-top: 4px; }
-        .sync-dot {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 0.72rem; color: #34d399;
-        }
+        .sync-dot { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: #34d399; }
         .dot { width: 8px; height: 8px; background: #34d399; border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
         /* Auth */
-        #auth-screen {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 420px;
-            margin: 80px auto;
-            text-align: center;
-        }
+        #auth-screen { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 40px; max-width: 420px; margin: 80px auto; text-align: center; }
         #auth-screen h2 { color: #a78bfa; margin-bottom: 8px; }
         #auth-screen p { color: #64748b; font-size: 0.88rem; margin-bottom: 24px; }
 
-        /* Cards */
-        .card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 14px;
-            padding: 28px;
-            margin-bottom: 24px;
-        }
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 6px;
-        }
-        .card-title { color: #a78bfa; font-size: 1.1rem; font-weight: 600; }
-        .active-badge {
-            font-size: 0.7rem;
-            background: #064e3b;
-            color: #34d399;
-            border: 1px solid #34d399;
-            padding: 2px 10px;
-            border-radius: 20px;
-        }
+        /* Card */
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 28px; margin-bottom: 28px; }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+        .card-title { color: #a78bfa; font-size: 1.1rem; font-weight: 700; }
         .card-description { color: #64748b; font-size: 0.82rem; margin-bottom: 16px; }
 
+        /* Omgeving badges */
+        .env-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .env-badge { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; border: 1px solid; cursor: default; }
+        .env-badge.prod { background: #1a2744; border-color: #3b82f6; color: #93c5fd; }
+        .env-badge.stag { background: #1a2d1a; border-color: #22c55e; color: #86efac; }
+        .env-badge .env-label { opacity: 0.7; font-weight: 400; }
+        .env-badge .env-ver { font-weight: 700; }
+        .env-live-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+        .env-badge.prod .env-live-dot { background: #3b82f6; }
+        .env-badge.stag .env-live-dot { background: #22c55e; }
+
         /* Textarea */
-        textarea {
-            width: 100%;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            color: #f1f5f9;
-            font-family: inherit;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding: 14px;
-            resize: vertical;
-            min-height: 120px;
-            transition: border-color 0.2s;
-        }
+        .editor-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        textarea { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #f1f5f9; font-family: inherit; font-size: 0.95rem; line-height: 1.6; padding: 14px; resize: vertical; min-height: 110px; transition: border-color 0.2s; }
         textarea:focus { outline: none; border-color: #a78bfa; }
         textarea.changed { border-color: #fbbf24; }
 
-        /* Note input */
-        .note-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-            align-items: center;
-        }
-        .note-row input {
-            flex: 1;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            color: #94a3b8;
-            font-size: 0.82rem;
-            padding: 8px 12px;
-        }
+        /* Note + save row */
+        .note-row { display: flex; gap: 10px; margin-top: 12px; align-items: center; }
+        .note-row input { flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #94a3b8; font-size: 0.82rem; padding: 8px 12px; }
         .note-row input:focus { outline: none; border-color: #a78bfa; }
         .note-row input::placeholder { color: #475569; }
 
         /* Buttons */
-        button {
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-weight: 600;
-            transition: all 0.15s;
-        }
-        .btn-save {
-            background: #7c3aed;
-            color: white;
-            padding: 9px 20px;
-            font-size: 0.85rem;
-        }
-        .btn-save:hover { background: #6d28d9; }
-        .btn-save:disabled { background: #334155; color: #64748b; cursor: default; }
-        .btn-small {
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #334155;
-        }
-        .btn-small:hover { border-color: #a78bfa; color: #a78bfa; }
-        .btn-activate {
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            background: #064e3b;
-            color: #34d399;
-            border: 1px solid #34d399;
-        }
-        .btn-activate:hover { background: #065f46; }
-        .btn-auth {
-            background: #7c3aed;
-            color: white;
-            padding: 12px 32px;
-            font-size: 0.95rem;
-            width: 100%;
-            margin-top: 8px;
-        }
+        button { cursor: pointer; border: none; border-radius: 8px; font-family: inherit; font-weight: 600; transition: all 0.15s; }
+        .btn-save { background: #4c1d95; color: #c4b5fd; border: 1px solid #7c3aed; padding: 9px 18px; font-size: 0.83rem; }
+        .btn-save:hover { background: #5b21b6; }
+        .btn-save:disabled { background: #1e293b; color: #475569; border-color: #334155; cursor: default; }
+        .btn-prod { background: #1e3a5f; color: #93c5fd; border: 1px solid #3b82f6; padding: 5px 12px; font-size: 0.75rem; }
+        .btn-prod:hover { background: #1d4ed8; color: white; }
+        .btn-stag { background: #14532d; color: #86efac; border: 1px solid #22c55e; padding: 5px 12px; font-size: 0.75rem; }
+        .btn-stag:hover { background: #15803d; color: white; }
+        .btn-auth { background: #7c3aed; color: white; padding: 12px 32px; font-size: 0.95rem; width: 100%; margin-top: 8px; }
         .btn-auth:hover { background: #6d28d9; }
+        .btn-logout { background: transparent; color: #475569; border: 1px solid #334155; padding: 6px 14px; font-size: 0.78rem; }
+        .btn-logout:hover { color: #f87171; border-color: #f87171; }
 
-        /* Versie geschiedenis */
-        .versions-toggle {
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            color: #64748b;
-            font-size: 0.82rem;
-            user-select: none;
-        }
+        /* Versiegeschiedenis */
+        .versions-toggle { margin-top: 18px; display: flex; align-items: center; gap: 8px; cursor: pointer; color: #64748b; font-size: 0.82rem; user-select: none; }
         .versions-toggle:hover { color: #94a3b8; }
-        .versions-toggle .arrow { transition: transform 0.2s; }
+        .versions-toggle .arrow { transition: transform 0.2s; display: inline-block; }
         .versions-toggle.open .arrow { transform: rotate(90deg); }
-
-        .versions-list {
-            display: none;
-            margin-top: 12px;
-            border-top: 1px solid #1e293b;
-            padding-top: 12px;
-        }
+        .versions-list { display: none; margin-top: 12px; border-top: 1px solid #1e293b; padding-top: 12px; }
         .versions-list.open { display: block; }
 
-        .version-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .version-item:hover { background: rgba(167,139,250,0.06); }
-        .version-item.active-version {
-            border-color: #34d399;
-            background: rgba(52,211,153,0.05);
-        }
+        .version-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 10px; margin-bottom: 6px; border: 1px solid #1e293b; transition: background 0.15s; cursor: pointer; }
+        .version-item:hover { background: rgba(167,139,250,0.05); border-color: #334155; }
+        .version-item.selected { border-color: #7c3aed; background: rgba(124,58,237,0.07); }
         .version-meta { flex: 1; min-width: 0; }
-        .version-preview {
-            font-size: 0.82rem;
-            color: #94a3b8;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .version-num { font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+        .version-preview { font-size: 0.84rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .version-preview.empty { font-style: italic; color: #475569; }
-        .version-info {
-            font-size: 0.72rem;
-            color: #475569;
-            margin-top: 2px;
-        }
+        .version-info { font-size: 0.72rem; color: #475569; margin-top: 3px; }
         .version-note { color: #fbbf24; }
 
-        /* Input globaal */
-        input[type="password"] {
-            width: 100%;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            color: #f1f5f9;
-            font-size: 0.95rem;
-            padding: 12px 14px;
-            margin-bottom: 8px;
-        }
+        .version-env-tags { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
+        .vtag { font-size: 0.68rem; font-weight: 700; padding: 1px 7px; border-radius: 10px; border: 1px solid; }
+        .vtag-prod { background: #1a2744; border-color: #3b82f6; color: #93c5fd; }
+        .vtag-stag { background: #14532d; border-color: #22c55e; color: #86efac; }
+
+        .version-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+
+        /* Input global */
+        input[type="password"] { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #f1f5f9; font-size: 0.95rem; padding: 12px 14px; margin-bottom: 8px; }
         input[type="password"]:focus { outline: none; border-color: #a78bfa; }
 
         /* Toast */
-        #toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: all 0.25s;
-            pointer-events: none;
-            z-index: 999;
-        }
+        #toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 20px; border-radius: 10px; font-size: 0.88rem; font-weight: 600; opacity: 0; transform: translateY(8px); transition: all 0.25s; pointer-events: none; z-index: 999; }
         #toast.show { opacity: 1; transform: translateY(0); }
         #toast.success { background: #064e3b; color: #34d399; border: 1px solid #34d399; }
-        #toast.error   { background: #450a0a; color: #f87171; border: 1px solid #f87171; }
+        #toast.error { background: #450a0a; color: #f87171; border: 1px solid #f87171; }
 
-        /* Last updated */
-        .last-updated { color: #475569; font-size: 0.78rem; margin-top: 8px; }
-
-        /* Logout */
-        .btn-logout {
-            background: transparent;
-            color: #475569;
-            border: 1px solid #334155;
-            padding: 6px 14px;
-            font-size: 0.78rem;
-        }
-        .btn-logout:hover { color: #f87171; border-color: #f87171; }
+        .divider { border: none; border-top: 1px solid #1e293b; margin: 16px 0; }
     </style>
 </head>
 <body>
 
 <div id="toast"></div>
 
-<!-- AUTH SCHERM -->
+<!-- AUTH -->
 <div id="auth-screen">
     <h2>🔐 Beheer toegang</h2>
     <p>Voer het beheer wachtwoord in om door te gaan.</p>
@@ -266,7 +115,7 @@
     <button class="btn-auth" onclick="login()">Inloggen</button>
 </div>
 
-<!-- BEHEER INTERFACE -->
+<!-- APP -->
 <div id="app" style="display:none">
     <div class="container">
         <header>
@@ -279,22 +128,22 @@
                 <button class="btn-logout" onclick="logout()">Uitloggen</button>
             </div>
         </header>
-
         <div id="cards-container"></div>
     </div>
 </div>
 
 <script>
-// ─── Config ────────────────────────────────────────────────────────────────
 const CONTENT_URL = './content.json';
 const SAVE_URL    = './save.php';
 const FIELDS      = ['missie', 'visie', 'strategie'];
+const ENVS        = { productie: { label: 'Productie', cls: 'prod', btnCls: 'btn-prod', tagCls: 'vtag-prod' },
+                      staging:   { label: 'Staging',   cls: 'stag', btnCls: 'btn-stag', tagCls: 'vtag-stag' } };
 
-// ─── State ─────────────────────────────────────────────────────────────────
 let token   = '';
 let content = null;
+let selected = {};  // { field: index } — welke versie geselecteerd in textarea
 
-// ─── Auth ──────────────────────────────────────────────────────────────────
+// ── Auth ───────────────────────────────────────────────────────────────────
 function login() {
     const val = document.getElementById('token-input').value.trim();
     if (!val) return;
@@ -304,225 +153,226 @@ function login() {
     document.getElementById('app').style.display = 'block';
     loadContent();
 }
-
-function logout() {
-    sessionStorage.removeItem('mbnjoy_token');
-    token = '';
-    location.reload();
-}
-
-document.getElementById('token-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') login();
-});
-
-// Auto-login als token in sessie zit
+function logout() { sessionStorage.removeItem('mbnjoy_token'); location.reload(); }
+document.getElementById('token-input').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
 window.addEventListener('DOMContentLoaded', () => {
     const saved = sessionStorage.getItem('mbnjoy_token');
-    if (saved) {
-        token = saved;
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
-        loadContent();
-    }
+    if (saved) { token = saved; document.getElementById('auth-screen').style.display = 'none'; document.getElementById('app').style.display = 'block'; loadContent(); }
 });
 
-// ─── Content laden ─────────────────────────────────────────────────────────
+// ── Content laden ──────────────────────────────────────────────────────────
 async function loadContent() {
     try {
         const r = await fetch(CONTENT_URL + '?t=' + Date.now());
         content = await r.json();
-        renderCards();
-        document.getElementById('last-updated').textContent =
-            'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
-    } catch(e) {
-        toast('Kan content.json niet laden', 'error');
-    }
+        FIELDS.forEach(f => { selected[f] = content.content[f].active_index.productie ?? 0; });
+        renderAll();
+    } catch(e) { toast('Kan content.json niet laden', 'error'); }
 }
 
-// ─── Kaarten renderen ──────────────────────────────────────────────────────
-function renderCards() {
+function renderAll() {
     const container = document.getElementById('cards-container');
     container.innerHTML = '';
-
-    FIELDS.forEach(field => {
-        const f         = content.content[field];
-        const activeIdx = f.active_index;
-        const activeVal = f.versions[activeIdx]?.value ?? '';
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.id = `card-${field}`;
-
-        card.innerHTML = `
-            <div class="card-header">
-                <div class="card-title">${f.label}</div>
-                <span class="active-badge">Versie ${activeIdx + 1} actief</span>
-            </div>
-            <div class="card-description">${f.description}</div>
-
-            <textarea
-                id="ta-${field}"
-                placeholder="Voer de ${f.label.toLowerCase()} tekst in..."
-                oninput="onTextChange('${field}')"
-            >${activeVal}</textarea>
-
-            <div class="note-row">
-                <input type="text" id="note-${field}" placeholder="Optionele notitie bij opslaan (bijv. 'Nieuwe formulering Q2')">
-                <button class="btn-save" id="btn-${field}" onclick="saveField('${field}')" disabled>
-                    Opslaan
-                </button>
-            </div>
-
-            <div class="versions-toggle" id="toggle-${field}" onclick="toggleVersions('${field}')">
-                <span class="arrow">▶</span>
-                Versiegeschiedenis (${f.versions.length} / 5)
-            </div>
-            <div class="versions-list" id="vlist-${field}">
-                ${renderVersionList(field)}
-            </div>
-        `;
-
-        container.appendChild(card);
-    });
+    FIELDS.forEach(field => container.appendChild(buildCard(field)));
+    document.getElementById('last-updated').textContent =
+        'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
 }
 
-function renderVersionList(field) {
-    const f         = content.content[field];
-    const activeIdx = f.active_index;
+// ── Card bouwen ────────────────────────────────────────────────────────────
+function buildCard(field) {
+    const f    = content.content[field];
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.id = `card-${field}`;
+
+    const selIdx  = selected[field] ?? 0;
+    const selVal  = f.versions[selIdx]?.value ?? '';
+    const prodIdx = f.active_index.productie;
+    const stagIdx = f.active_index.staging;
+
+    card.innerHTML = `
+        <div class="card-top">
+            <div class="card-title">${f.label}</div>
+            <div class="env-badges" id="badges-${field}">
+                ${envBadgeHtml(f, 'productie')}
+                ${envBadgeHtml(f, 'staging')}
+            </div>
+        </div>
+        <div class="card-description">${f.description}</div>
+
+        <div class="editor-label">Bewerken — Versie ${selIdx + 1} geselecteerd</div>
+        <textarea id="ta-${field}" oninput="onTextChange('${field}')">${selVal}</textarea>
+
+        <div class="note-row">
+            <input type="text" id="note-${field}" placeholder="Notitie bij opslaan (optioneel)">
+            <button class="btn-save" id="btnsave-${field}" onclick="saveField('${field}')" disabled>
+                Opslaan als nieuwe versie
+            </button>
+        </div>
+
+        <hr class="divider">
+        <div class="versions-toggle" id="toggle-${field}" onclick="toggleVersions('${field}')">
+            <span class="arrow">▶</span> Versiegeschiedenis (${f.versions.length} / 5)
+        </div>
+        <div class="versions-list" id="vlist-${field}">
+            ${buildVersionList(field)}
+        </div>
+    `;
+    return card;
+}
+
+function envBadgeHtml(f, env) {
+    const cfg = ENVS[env];
+    const idx = f.active_index[env];
+    const ver = f.versions[idx];
+    const preview = ver?.value
+        ? (ver.value.length > 22 ? ver.value.substring(0,22)+'…' : ver.value)
+        : '(leeg)';
+    return `<div class="env-badge ${cfg.cls}">
+        <span class="env-live-dot"></span>
+        <span class="env-label">${cfg.label}:</span>
+        <span class="env-ver">v${idx + 1}</span>
+        <span style="color:#475569;font-size:0.72rem;font-weight:400"> · ${preview}</span>
+    </div>`;
+}
+
+function buildVersionList(field) {
+    const f       = content.content[field];
+    const prodIdx = f.active_index.productie;
+    const stagIdx = f.active_index.staging;
+    const selIdx  = selected[field] ?? 0;
 
     return f.versions.map((v, i) => {
-        const isActive  = i === activeIdx;
-        const preview   = v.value
-            ? (v.value.length > 80 ? v.value.substring(0, 80) + '…' : v.value)
-            : null;
+        const isProd    = i === prodIdx;
+        const isStag    = i === stagIdx;
+        const isSel     = i === selIdx;
+        const preview   = v.value ? (v.value.length > 60 ? v.value.substring(0,60)+'…' : v.value) : null;
         const date      = new Date(v.timestamp).toLocaleString('nl-NL');
         const noteHtml  = v.note ? `<span class="version-note"> · ${v.note}</span>` : '';
+        const tags      = [
+            isProd ? `<span class="vtag vtag-prod">PROD</span>` : '',
+            isStag ? `<span class="vtag vtag-stag">STAGING</span>` : ''
+        ].join('');
 
-        return `
-            <div class="version-item ${isActive ? 'active-version' : ''}" id="vi-${field}-${i}">
-                <div class="version-meta">
-                    <div class="version-preview ${!preview ? 'empty' : ''}">
-                        ${preview ?? '(leeg)'}
-                    </div>
-                    <div class="version-info">Versie ${i + 1} · ${date}${noteHtml}</div>
-                </div>
-                ${!isActive ? `<button class="btn-activate" onclick="activateVersion('${field}', ${i})">Activeer</button>` : '<span style="font-size:0.72rem;color:#34d399">✓ Live</span>'}
+        return `<div class="version-item ${isSel ? 'selected' : ''}" id="vi-${field}-${i}" onclick="selectVersion('${field}', ${i})">
+            <div class="version-meta">
+                <div class="version-num">Versie ${i + 1}</div>
+                <div class="version-preview ${!preview ? 'empty' : ''}">${preview ?? '(leeg)'}</div>
+                <div class="version-info">${date}${noteHtml}</div>
+                ${tags ? `<div class="version-env-tags">${tags}</div>` : ''}
             </div>
-        `;
+            <div class="version-actions">
+                ${!isProd ? `<button class="btn-prod" onclick="event.stopPropagation();activateVersion('${field}',${i},'productie')">→ Productie</button>` : `<span style="font-size:0.7rem;color:#3b82f6;padding:4px 0">✓ Productie</span>`}
+                ${!isStag ? `<button class="btn-stag" onclick="event.stopPropagation();activateVersion('${field}',${i},'staging')">→ Staging</button>` : `<span style="font-size:0.7rem;color:#22c55e;padding:4px 0">✓ Staging</span>`}
+            </div>
+        </div>`;
     }).join('');
 }
 
-// ─── Interactie ────────────────────────────────────────────────────────────
+// ── Interactie ─────────────────────────────────────────────────────────────
+function selectVersion(field, index) {
+    selected[field] = index;
+    const f   = content.content[field];
+    const val = f.versions[index]?.value ?? '';
+    const ta  = document.getElementById(`ta-${field}`);
+    ta.value  = val;
+    ta.classList.remove('changed');
+    document.getElementById(`btnsave-${field}`).disabled = true;
+
+    // Editor label bijwerken
+    const lbl = document.querySelector(`#card-${field} .editor-label`);
+    if (lbl) lbl.textContent = `Bewerken — Versie ${index + 1} geselecteerd`;
+
+    // Versie items herstijlen
+    document.querySelectorAll(`#vlist-${field} .version-item`).forEach((el, i) => {
+        el.classList.toggle('selected', i === index);
+    });
+}
+
 function onTextChange(field) {
     const ta      = document.getElementById(`ta-${field}`);
-    const btn     = document.getElementById(`btn-${field}`);
-    const activeVal = content.content[field].versions[content.content[field].active_index]?.value ?? '';
-    const changed   = ta.value !== activeVal;
+    const selIdx  = selected[field] ?? 0;
+    const origVal = content.content[field].versions[selIdx]?.value ?? '';
+    const changed = ta.value !== origVal;
     ta.classList.toggle('changed', changed);
-    btn.disabled = !changed;
+    document.getElementById(`btnsave-${field}`).disabled = !changed;
 }
 
 function toggleVersions(field) {
-    const toggle = document.getElementById(`toggle-${field}`);
-    const list   = document.getElementById(`vlist-${field}`);
-    toggle.classList.toggle('open');
-    list.classList.toggle('open');
+    document.getElementById(`toggle-${field}`).classList.toggle('open');
+    document.getElementById(`vlist-${field}`).classList.toggle('open');
 }
 
-// ─── Opslaan ───────────────────────────────────────────────────────────────
+// ── Opslaan ────────────────────────────────────────────────────────────────
 async function saveField(field) {
     const value = document.getElementById(`ta-${field}`).value;
     const note  = document.getElementById(`note-${field}`).value.trim();
-    const btn   = document.getElementById(`btn-${field}`);
-
-    btn.disabled = true;
-    btn.textContent = 'Opslaan...';
+    const btn   = document.getElementById(`btnsave-${field}`);
+    btn.disabled = true; btn.textContent = 'Opslaan...';
 
     try {
-        const r = await fetch(SAVE_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({ action: 'save', field, value, note })
-        });
-
-        const json = await r.json();
-
-        if (!r.ok || json.error) {
-            throw new Error(json.error ?? 'Onbekende fout');
-        }
-
-        content = json.data;
+        const r    = await api({ action: 'save', field, value, note });
+        content    = r.data;
+        selected[field] = 0;  // nieuwe versie staat bovenaan
         document.getElementById(`note-${field}`).value = '';
-        document.getElementById(`ta-${field}`).classList.remove('changed');
-        document.getElementById(`last-updated`).textContent =
-            'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
-
-        // Versie badge bijwerken
-        renderCardVersionBadge(field);
-        document.getElementById(`vlist-${field}`).innerHTML = renderVersionList(field);
-
-        toast(`${content.content[field].label} opgeslagen en live gezet ✓`, 'success');
-    } catch(e) {
-        toast('Fout: ' + e.message, 'error');
-    }
-
-    btn.textContent = 'Opslaan';
+        refreshCard(field);
+        toast(`${content.content[field].label} opgeslagen als nieuwe versie`, 'success');
+    } catch(e) { toast('Fout: ' + e.message, 'error'); }
+    btn.textContent = 'Opslaan als nieuwe versie';
 }
 
-// ─── Versie activeren ──────────────────────────────────────────────────────
-async function activateVersion(field, index) {
+// ── Versie activeren ───────────────────────────────────────────────────────
+async function activateVersion(field, index, env) {
     try {
-        const r = await fetch(SAVE_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({ action: 'activate', field, index })
-        });
-
-        const json = await r.json();
-        if (!r.ok || json.error) throw new Error(json.error ?? 'Onbekende fout');
-
-        content = json.data;
-
-        // Textarea updaten naar geactiveerde versie
-        const val = content.content[field].versions[index]?.value ?? '';
-        document.getElementById(`ta-${field}`).value = val;
-        document.getElementById(`ta-${field}`).classList.remove('changed');
-        document.getElementById(`btn-${field}`).disabled = true;
-
-        renderCardVersionBadge(field);
-        document.getElementById(`vlist-${field}`).innerHTML = renderVersionList(field);
-        document.getElementById(`last-updated`).textContent =
-            'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
-
-        toast(`Versie ${index + 1} van ${content.content[field].label} is nu live ✓`, 'success');
-    } catch(e) {
-        toast('Fout: ' + e.message, 'error');
-    }
+        const r = await api({ action: 'activate', field, index, env });
+        content = r.data;
+        refreshCard(field);
+        const envLabel = ENVS[env].label;
+        toast(`Versie ${index + 1} van ${content.content[field].label} live in ${envLabel} ✓`, 'success');
+    } catch(e) { toast('Fout: ' + e.message, 'error'); }
 }
 
-function renderCardVersionBadge(field) {
-    const activeIdx = content.content[field].active_index;
-    const badge     = document.querySelector(`#card-${field} .active-badge`);
-    const toggle    = document.getElementById(`toggle-${field}`);
-    if (badge)  badge.textContent = `Versie ${activeIdx + 1} actief`;
-    if (toggle) toggle.innerHTML = toggle.innerHTML.replace(
-        /Versiegeschiedenis \(\d+ \/ 5\)/,
-        `Versiegeschiedenis (${content.content[field].versions.length} / 5)`
-    );
+// ── Card herfresh (zonder volledige re-render) ─────────────────────────────
+function refreshCard(field) {
+    const f       = content.content[field];
+    const card    = document.getElementById(`card-${field}`);
+    // Badges
+    document.getElementById(`badges-${field}`).innerHTML =
+        envBadgeHtml(f, 'productie') + envBadgeHtml(f, 'staging');
+    // Versie toggle teller
+    const toggle = document.getElementById(`toggle-${field}`);
+    toggle.innerHTML = `<span class="arrow ${toggle.classList.contains('open')?'open':''}">▶</span> Versiegeschiedenis (${f.versions.length} / 5)`;
+    // Versie lijst
+    document.getElementById(`vlist-${field}`).innerHTML = buildVersionList(field);
+    // Last updated
+    document.getElementById('last-updated').textContent =
+        'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
+    // Textarea
+    const selIdx = selected[field] ?? 0;
+    document.getElementById(`ta-${field}`).value = f.versions[selIdx]?.value ?? '';
+    document.getElementById(`ta-${field}`).classList.remove('changed');
+    document.getElementById(`btnsave-${field}`).disabled = true;
+    const lbl = card.querySelector('.editor-label');
+    if (lbl) lbl.textContent = `Bewerken — Versie ${selIdx + 1} geselecteerd`;
 }
 
-// ─── Toast ─────────────────────────────────────────────────────────────────
+// ── API helper ─────────────────────────────────────────────────────────────
+async function api(body) {
+    const r = await fetch(SAVE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify(body)
+    });
+    const json = await r.json();
+    if (!r.ok || json.error) throw new Error(json.error ?? 'Onbekende fout');
+    return json;
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
 let toastTimer;
 function toast(msg, type = 'success') {
     const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.className = `show ${type}`;
+    el.textContent = msg; el.className = `show ${type}`;
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.className = '', 3500);
 }

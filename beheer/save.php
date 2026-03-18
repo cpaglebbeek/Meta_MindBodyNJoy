@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
 define('SECRET_TOKEN', 'repeldildo!');
 define('CONTENT_FILE', __DIR__ . '/content.json');
 define('MAX_VERSIONS',  5);
+define('ENVS', ['productie', 'staging']);
 // ───────────────────────────────────────────────────────────────────────────
 
-// Authenticatie
-$headers   = getallheaders();
-$auth      = $headers['Authorization'] ?? ($headers['authorization'] ?? '');
+$headers  = getallheaders();
+$auth     = $headers['Authorization'] ?? ($headers['authorization'] ?? '');
 if ($auth !== 'Bearer ' . SECRET_TOKEN) {
     http_response_code(401);
     echo json_encode(['error' => 'Niet geautoriseerd']);
@@ -48,34 +48,42 @@ if (!isset($data['content'][$field])) {
 // ─── Acties ────────────────────────────────────────────────────────────────
 
 if ($action === 'save') {
-    // Nieuwe versie bovenaan toevoegen
+    // Nieuwe versie toevoegen — activeert NIET automatisch in een omgeving
     $new_version = [
         'value'     => $body['value'] ?? '',
         'timestamp' => date('c'),
         'note'      => $body['note'] ?? ''
     ];
     array_unshift($data['content'][$field]['versions'], $new_version);
-
-    // Max 5 versies bewaren
     $data['content'][$field]['versions'] = array_slice(
         $data['content'][$field]['versions'], 0, MAX_VERSIONS
     );
-
-    // Nieuwe versie direct actief
-    $data['content'][$field]['active_index'] = 0;
+    // Verschuif active_index mee (versies schuiven op door unshift)
+    foreach (ENVS as $env) {
+        $current = $data['content'][$field]['active_index'][$env] ?? 0;
+        $new_idx = min($current + 1, MAX_VERSIONS - 1);
+        $data['content'][$field]['active_index'][$env] = $new_idx;
+    }
     $data['last_updated'] = date('c');
 
 } elseif ($action === 'activate') {
+    $env   = $body['env'] ?? '';
     $index = (int)($body['index'] ?? 0);
-    $max   = count($data['content'][$field]['versions']) - 1;
 
+    if (!in_array($env, ENVS)) {
+        http_response_code(400);
+        echo json_encode(['error' => "Onbekende omgeving: $env"]);
+        exit;
+    }
+
+    $max = count($data['content'][$field]['versions']) - 1;
     if ($index < 0 || $index > $max) {
         http_response_code(400);
         echo json_encode(['error' => "Ongeldige versie-index: $index"]);
         exit;
     }
 
-    $data['content'][$field]['active_index'] = $index;
+    $data['content'][$field]['active_index'][$env] = $index;
     $data['last_updated'] = date('c');
 
 } else {

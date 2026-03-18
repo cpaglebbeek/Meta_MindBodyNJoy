@@ -59,10 +59,15 @@ const server = http.createServer((req, res) => {
                     });
                     data.content[field].versions =
                         data.content[field].versions.slice(0, MAX_VERSIONS);
-                    data.content[field].active_index = 0;
+                    const envs = ['productie','staging'];
+                    envs.forEach(env => {
+                        const cur = (data.content[field].active_index && data.content[field].active_index[env]) || 0;
+                        data.content[field].active_index[env] = Math.min(cur + 1, MAX_VERSIONS - 1);
+                    });
                     data.last_updated = new Date().toISOString();
 
                 } else if (action === 'activate') {
+                    const env   = input.env || 'productie';
                     const index = parseInt(input.index, 10);
                     const max   = data.content[field].versions.length - 1;
                     if (index < 0 || index > max) {
@@ -70,7 +75,10 @@ const server = http.createServer((req, res) => {
                         res.end(JSON.stringify({ error: `Ongeldige index: ${index}` }));
                         return;
                     }
-                    data.content[field].active_index = index;
+                    if (!data.content[field].active_index || typeof data.content[field].active_index !== 'object') {
+                        data.content[field].active_index = { productie: 0, staging: 0 };
+                    }
+                    data.content[field].active_index[env] = index;
                     data.last_updated = new Date().toISOString();
 
                 } else {

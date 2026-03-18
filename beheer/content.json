@@ -1,11 +1,14 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "last_updated": "2026-03-18T12:00:00Z",
   "content": {
     "missie": {
       "label": "Missie",
       "description": "Waarom bestaat MindBodyNJoy? Wat is de kern van de organisatie?",
-      "active_index": 0,
+      "active_index": {
+        "productie": 0,
+        "staging": 0
+      },
       "versions": [
         {
           "value": "",
@@ -17,7 +20,10 @@
     "visie": {
       "label": "Visie",
       "description": "Waar wil MindBodyNJoy naartoe? Wat is de stip op de horizon?",
-      "active_index": 0,
+      "active_index": {
+        "productie": 0,
+        "staging": 0
+      },
       "versions": [
         {
           "value": "",
@@ -29,7 +35,10 @@
     "strategie": {
       "label": "Strategie",
       "description": "Hoe realiseert MindBodyNJoy haar visie? Welke aanpak staat centraal?",
-      "active_index": 0,
+      "active_index": {
+        "productie": 0,
+        "staging": 0
+      },
       "versions": [
         {
           "value": "",
