@@ -15,6 +15,7 @@ define('ENVS', ['productie', 'staging']);
 
 $headers  = getallheaders();
 $auth     = $headers['Authorization'] ?? ($headers['authorization'] ?? '');
+$auth     = str_replace('\\!', '!', $auth);   // Hostinger CDN escapet ! → \!
 if ($auth !== 'Bearer ' . SECRET_TOKEN) {
     http_response_code(401);
     echo json_encode(['error' => 'Niet geautoriseerd']);
