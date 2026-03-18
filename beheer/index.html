@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindBodyNJoy — Functioneel Beheer</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0f172a;
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container { max-width: 860px; margin: 0 auto; }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        h1 { color: #a78bfa; font-size: 1.5rem; letter-spacing: 1.5px; text-transform: uppercase; }
+        .subtitle { color: #64748b; font-size: 0.85rem; margin-top: 4px; }
+        .sync-dot {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.72rem; color: #34d399;
+        }
+        .dot { width: 8px; height: 8px; background: #34d399; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        /* Auth */
+        #auth-screen {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 420px;
+            margin: 80px auto;
+            text-align: center;
+        }
+        #auth-screen h2 { color: #a78bfa; margin-bottom: 8px; }
+        #auth-screen p { color: #64748b; font-size: 0.88rem; margin-bottom: 24px; }
+
+        /* Cards */
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        .card-title { color: #a78bfa; font-size: 1.1rem; font-weight: 600; }
+        .active-badge {
+            font-size: 0.7rem;
+            background: #064e3b;
+            color: #34d399;
+            border: 1px solid #34d399;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+        .card-description { color: #64748b; font-size: 0.82rem; margin-bottom: 16px; }
+
+        /* Textarea */
+        textarea {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding: 14px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.2s;
+        }
+        textarea:focus { outline: none; border-color: #a78bfa; }
+        textarea.changed { border-color: #fbbf24; }
+
+        /* Note input */
+        .note-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            align-items: center;
+        }
+        .note-row input {
+            flex: 1;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 0.82rem;
+            padding: 8px 12px;
+        }
+        .note-row input:focus { outline: none; border-color: #a78bfa; }
+        .note-row input::placeholder { color: #475569; }
+
+        /* Buttons */
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .btn-save {
+            background: #7c3aed;
+            color: white;
+            padding: 9px 20px;
+            font-size: 0.85rem;
+        }
+        .btn-save:hover { background: #6d28d9; }
+        .btn-save:disabled { background: #334155; color: #64748b; cursor: default; }
+        .btn-small {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+        .btn-small:hover { border-color: #a78bfa; color: #a78bfa; }
+        .btn-activate {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            background: #064e3b;
+            color: #34d399;
+            border: 1px solid #34d399;
+        }
+        .btn-activate:hover { background: #065f46; }
+        .btn-auth {
+            background: #7c3aed;
+            color: white;
+            padding: 12px 32px;
+            font-size: 0.95rem;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .btn-auth:hover { background: #6d28d9; }
+
+        /* Versie geschiedenis */
+        .versions-toggle {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 0.82rem;
+            user-select: none;
+        }
+        .versions-toggle:hover { color: #94a3b8; }
+        .versions-toggle .arrow { transition: transform 0.2s; }
+        .versions-toggle.open .arrow { transform: rotate(90deg); }
+
+        .versions-list {
+            display: none;
+            margin-top: 12px;
+            border-top: 1px solid #1e293b;
+            padding-top: 12px;
+        }
+        .versions-list.open { display: block; }
+
+        .version-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .version-item:hover { background: rgba(167,139,250,0.06); }
+        .version-item.active-version {
+            border-color: #34d399;
+            background: rgba(52,211,153,0.05);
+        }
+        .version-meta { flex: 1; min-width: 0; }
+        .version-preview {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .version-preview.empty { font-style: italic; color: #475569; }
+        .version-info {
+            font-size: 0.72rem;
+            color: #475569;
+            margin-top: 2px;
+        }
+        .version-note { color: #fbbf24; }
+
+        /* Input globaal */
+        input[type="password"] {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-size: 0.95rem;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+        }
+        input[type="password"]:focus { outline: none; border-color: #a78bfa; }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.25s;
+            pointer-events: none;
+            z-index: 999;
+        }
+        #toast.show { opacity: 1; transform: translateY(0); }
+        #toast.success { background: #064e3b; color: #34d399; border: 1px solid #34d399; }
+        #toast.error   { background: #450a0a; color: #f87171; border: 1px solid #f87171; }
+
+        /* Last updated */
+        .last-updated { color: #475569; font-size: 0.78rem; margin-top: 8px; }
+
+        /* Logout */
+        .btn-logout {
+            background: transparent;
+            color: #475569;
+            border: 1px solid #334155;
+            padding: 6px 14px;
+            font-size: 0.78rem;
+        }
+        .btn-logout:hover { color: #f87171; border-color: #f87171; }
+    </style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- AUTH SCHERM -->
+<div id="auth-screen">
+    <h2>🔐 Beheer toegang</h2>
+    <p>Voer het beheer wachtwoord in om door te gaan.</p>
+    <input type="password" id="token-input" placeholder="Wachtwoord" autocomplete="current-password">
+    <button class="btn-auth" onclick="login()">Inloggen</button>
+</div>
+
+<!-- BEHEER INTERFACE -->
+<div id="app" style="display:none">
+    <div class="container">
+        <header>
+            <div>
+                <h1>MindBodyNJoy Beheer</h1>
+                <div class="subtitle" id="last-updated">Laden...</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+                <div class="sync-dot"><span class="dot"></span> CONTENT REPO</div>
+                <button class="btn-logout" onclick="logout()">Uitloggen</button>
+            </div>
+        </header>
+
+        <div id="cards-container"></div>
+    </div>
+</div>
+
+<script>
+// ─── Config ────────────────────────────────────────────────────────────────
+const CONTENT_URL = './content.json';
+const SAVE_URL    = './save.php';
+const FIELDS      = ['missie', 'visie', 'strategie'];
+
+// ─── State ─────────────────────────────────────────────────────────────────
+let token   = '';
+let content = null;
+
+// ─── Auth ──────────────────────────────────────────────────────────────────
+function login() {
+    const val = document.getElementById('token-input').value.trim();
+    if (!val) return;
+    token = val;
+    sessionStorage.setItem('mbnjoy_token', token);
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadContent();
+}
+
+function logout() {
+    sessionStorage.removeItem('mbnjoy_token');
+    token = '';
+    location.reload();
+}
+
+document.getElementById('token-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+});
+
+// Auto-login als token in sessie zit
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = sessionStorage.getItem('mbnjoy_token');
+    if (saved) {
+        token = saved;
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        loadContent();
+    }
+});
+
+// ─── Content laden ─────────────────────────────────────────────────────────
+async function loadContent() {
+    try {
+        const r = await fetch(CONTENT_URL + '?t=' + Date.now());
+        content = await r.json();
+        renderCards();
+        document.getElementById('last-updated').textContent =
+            'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
+    } catch(e) {
+        toast('Kan content.json niet laden', 'error');
+    }
+}
+
+// ─── Kaarten renderen ──────────────────────────────────────────────────────
+function renderCards() {
+    const container = document.getElementById('cards-container');
+    container.innerHTML = '';
+
+    FIELDS.forEach(field => {
+        const f         = content.content[field];
+        const activeIdx = f.active_index;
+        const activeVal = f.versions[activeIdx]?.value ?? '';
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.id = `card-${field}`;
+
+        card.innerHTML = `
+            <div class="card-header">
+                <div class="card-title">${f.label}</div>
+                <span class="active-badge">Versie ${activeIdx + 1} actief</span>
+            </div>
+            <div class="card-description">${f.description}</div>
+
+            <textarea
+                id="ta-${field}"
+                placeholder="Voer de ${f.label.toLowerCase()} tekst in..."
+                oninput="onTextChange('${field}')"
+            >${activeVal}</textarea>
+
+            <div class="note-row">
+                <input type="text" id="note-${field}" placeholder="Optionele notitie bij opslaan (bijv. 'Nieuwe formulering Q2')">
+                <button class="btn-save" id="btn-${field}" onclick="saveField('${field}')" disabled>
+                    Opslaan
+                </button>
+            </div>
+
+            <div class="versions-toggle" id="toggle-${field}" onclick="toggleVersions('${field}')">
+                <span class="arrow">▶</span>
+                Versiegeschiedenis (${f.versions.length} / 5)
+            </div>
+            <div class="versions-list" id="vlist-${field}">
+                ${renderVersionList(field)}
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function renderVersionList(field) {
+    const f         = content.content[field];
+    const activeIdx = f.active_index;
+
+    return f.versions.map((v, i) => {
+        const isActive  = i === activeIdx;
+        const preview   = v.value
+            ? (v.value.length > 80 ? v.value.substring(0, 80) + '…' : v.value)
+            : null;
+        const date      = new Date(v.timestamp).toLocaleString('nl-NL');
+        const noteHtml  = v.note ? `<span class="version-note"> · ${v.note}</span>` : '';
+
+        return `
+            <div class="version-item ${isActive ? 'active-version' : ''}" id="vi-${field}-${i}">
+                <div class="version-meta">
+                    <div class="version-preview ${!preview ? 'empty' : ''}">
+                        ${preview ?? '(leeg)'}
+                    </div>
+                    <div class="version-info">Versie ${i + 1} · ${date}${noteHtml}</div>
+                </div>
+                ${!isActive ? `<button class="btn-activate" onclick="activateVersion('${field}', ${i})">Activeer</button>` : '<span style="font-size:0.72rem;color:#34d399">✓ Live</span>'}
+            </div>
+        `;
+    }).join('');
+}
+
+// ─── Interactie ────────────────────────────────────────────────────────────
+function onTextChange(field) {
+    const ta      = document.getElementById(`ta-${field}`);
+    const btn     = document.getElementById(`btn-${field}`);
+    const activeVal = content.content[field].versions[content.content[field].active_index]?.value ?? '';
+    const changed   = ta.value !== activeVal;
+    ta.classList.toggle('changed', changed);
+    btn.disabled = !changed;
+}
+
+function toggleVersions(field) {
+    const toggle = document.getElementById(`toggle-${field}`);
+    const list   = document.getElementById(`vlist-${field}`);
+    toggle.classList.toggle('open');
+    list.classList.toggle('open');
+}
+
+// ─── Opslaan ───────────────────────────────────────────────────────────────
+async function saveField(field) {
+    const value = document.getElementById(`ta-${field}`).value;
+    const note  = document.getElementById(`note-${field}`).value.trim();
+    const btn   = document.getElementById(`btn-${field}`);
+
+    btn.disabled = true;
+    btn.textContent = 'Opslaan...';
+
+    try {
+        const r = await fetch(SAVE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ action: 'save', field, value, note })
+        });
+
+        const json = await r.json();
+
+        if (!r.ok || json.error) {
+            throw new Error(json.error ?? 'Onbekende fout');
+        }
+
+        content = json.data;
+        document.getElementById(`note-${field}`).value = '';
+        document.getElementById(`ta-${field}`).classList.remove('changed');
+        document.getElementById(`last-updated`).textContent =
+            'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
+
+        // Versie badge bijwerken
+        renderCardVersionBadge(field);
+        document.getElementById(`vlist-${field}`).innerHTML = renderVersionList(field);
+
+        toast(`${content.content[field].label} opgeslagen en live gezet ✓`, 'success');
+    } catch(e) {
+        toast('Fout: ' + e.message, 'error');
+    }
+
+    btn.textContent = 'Opslaan';
+}
+
+// ─── Versie activeren ──────────────────────────────────────────────────────
+async function activateVersion(field, index) {
+    try {
+        const r = await fetch(SAVE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ action: 'activate', field, index })
+        });
+
+        const json = await r.json();
+        if (!r.ok || json.error) throw new Error(json.error ?? 'Onbekende fout');
+
+        content = json.data;
+
+        // Textarea updaten naar geactiveerde versie
+        const val = content.content[field].versions[index]?.value ?? '';
+        document.getElementById(`ta-${field}`).value = val;
+        document.getElementById(`ta-${field}`).classList.remove('changed');
+        document.getElementById(`btn-${field}`).disabled = true;
+
+        renderCardVersionBadge(field);
+        document.getElementById(`vlist-${field}`).innerHTML = renderVersionList(field);
+        document.getElementById(`last-updated`).textContent =
+            'Laatste update: ' + new Date(content.last_updated).toLocaleString('nl-NL');
+
+        toast(`Versie ${index + 1} van ${content.content[field].label} is nu live ✓`, 'success');
+    } catch(e) {
+        toast('Fout: ' + e.message, 'error');
+    }
+}
+
+function renderCardVersionBadge(field) {
+    const activeIdx = content.content[field].active_index;
+    const badge     = document.querySelector(`#card-${field} .active-badge`);
+    const toggle    = document.getElementById(`toggle-${field}`);
+    if (badge)  badge.textContent = `Versie ${activeIdx + 1} actief`;
+    if (toggle) toggle.innerHTML = toggle.innerHTML.replace(
+        /Versiegeschiedenis \(\d+ \/ 5\)/,
+        `Versiegeschiedenis (${content.content[field].versions.length} / 5)`
+    );
+}
+
+// ─── Toast ─────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg, type = 'success') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `show ${type}`;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.className = '', 3500);
+}
+</script>
+</body>
+</html>

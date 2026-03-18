@@ -35,6 +35,15 @@
     "hosting": "Hostinger",
     "language": "nl"
   },
+  "content_repo": {
+    "file": "MINDBODYNJOY_CONTENT.json",
+    "hosted_at": "/beheer/content.json",
+    "schema_version": "1.0",
+    "fields": ["missie", "visie", "strategie"],
+    "max_versions_per_field": 5,
+    "beheer_interface": "/beheer/index.html",
+    "save_endpoint": "/beheer/save.php"
+  },
   "domains": [
     { "id": "functioneel_beheer", "name": "Functioneel Beheer", "file": "FUNCTIONEEL_BEHEER.md", "tasks": ["FB-001: Aanpassen missie, visie en/of strategie tekst"] },
     { "id": "technisch_beheer", "name": "Technisch Beheer", "file": "TECHNISCH_BEHEER.md", "tasks": ["TB-001: SSH key instellen voor Hostinger uploads"] },

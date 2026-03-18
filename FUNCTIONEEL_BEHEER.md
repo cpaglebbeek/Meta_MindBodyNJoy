@@ -5,6 +5,28 @@
 
 ---
 
+## Architectuur — Content Single Point of Truth
+
+Alle dynamische functionele content leeft in één JSON bestand: `content.json`.
+
+```
+[Beheer interface]  ──GET──▶  content.json  (leest actieve versie)
+[Beheer interface]  ──POST──▶ save.php      (schrijft nieuwe versie)
+[Website]           ──GET──▶  content.json  (toont actieve versie via JS)
+```
+
+- **`content.json`** — single point of truth, gehost op Hostinger onder `/beheer/`
+- **`save.php`** — write endpoint, beveiligd met token, beheert versies (max 5 per veld)
+- **`index.html`** — beheer interface, geen technische kennis vereist
+- **`MINDBODYNJOY_CONTENT.json`** — bronkopie in GitHub repo (Meta_MindBodyNJoy)
+
+### Versielogica
+- Bij opslaan: nieuwe versie bovenaan, max 5 versies bewaard per veld
+- Activeren: elke versie kan live gezet worden zonder opnieuw op te slaan
+- Website toont altijd de `active_index` versie
+
+---
+
 ## FB-001 · Aanpassen missie, visie en/of strategie tekst
 
 ### Beschrijving
