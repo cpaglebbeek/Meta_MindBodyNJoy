@@ -1,5 +1,11 @@
 [
   {
+    "version": "1.1.0",
+    "timestamp": "2026-03-18T22:50:00Z",
+    "codename": "Eucalyptus",
+    "changes": "Beheer interface v2.0.0 — G2-G9 volledig geïmplementeerd. Alle content-groepen (Homepage hero, Diensten, Over ons, Shop, Contact, Footer, SEO, Globale elementen) beschikbaar in beheer interface. Type-velden toegevoegd aan alle content-entries in MINDBODYNJOY_CONTENT.json."
+  },
+  {
     "version": "1.0.0",
     "timestamp": "2026-03-18T00:00:00Z",
     "codename": "Lavendel",

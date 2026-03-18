@@ -34,14 +34,14 @@ Alle content op mindbodynjoy.nl is ingedeeld in negen logische groepen voor func
 | ID | Groep | Omschrijving | Status in beheer interface |
 |----|-------|-------------|---------------------------|
 | **G1** | Brand Identity | Missie, visie, strategie | ✅ Geïmplementeerd |
-| **G2** | Homepage hero | Kopregel, subtitel, CTA-knop tekst | 🔲 Nog te implementeren |
-| **G3** | Diensten / Aanbod | Titel, beschrijving, prijs per dienst | 🔲 Nog te implementeren |
-| **G4** | Over ons | Introductietekst, bio, teamleden | 🔲 Nog te implementeren |
-| **G5** | Shop / Producten | Productteksten, categoriebeschrijvingen | 🔲 Nog te implementeren |
-| **G6** | Contact | Adres, telefoonnummer, openingstijden, intro-tekst | 🔲 Nog te implementeren |
-| **G7** | Footer | Copyright-tekst, links, social media verwijzingen | 🔲 Nog te implementeren |
-| **G8** | SEO-teksten | Meta titles, meta descriptions per pagina | 🔲 Nog te implementeren |
-| **G9** | Globale elementen | Navigatielabels, vaste CTA-teksten, cookietekst | 🔲 Nog te implementeren |
+| **G2** | Homepage hero | Kopregel, subtitel, CTA-knop tekst | ✅ Geïmplementeerd |
+| **G3** | Diensten / Aanbod | Titel, beschrijving, prijs per dienst | ✅ Geïmplementeerd |
+| **G4** | Over ons | Introductietekst, bio, teamleden | ✅ Geïmplementeerd |
+| **G5** | Shop / Producten | Productteksten, categoriebeschrijvingen | ✅ Geïmplementeerd |
+| **G6** | Contact | Adres, telefoonnummer, openingstijden, intro-tekst | ✅ Geïmplementeerd |
+| **G7** | Footer | Copyright-tekst, links, social media verwijzingen | ✅ Geïmplementeerd |
+| **G8** | SEO-teksten | Meta titles, meta descriptions per pagina | ✅ Geïmplementeerd |
+| **G9** | Globale elementen | Navigatielabels, vaste CTA-teksten, cookietekst | ✅ Geïmplementeerd |
 
 > **Noot (2026-03-18):** Homepage (ID 57) bevat reeds MindBodyNJoy-eigen content. Over ons (ID 47) en Contact (ID 42) bevatten nog Elementor/Juiceito demo-content — inventarisatie G4 en G6 volgt na opschonen.
 

@@ -6,7 +6,8 @@
 
 ## Openstaande items
 
-### [ ] Logische groeperingen G1–G9 uitrollen in beheer interface
+### [x] Logische groeperingen G1–G9 uitrollen in beheer interface
+**Afgerond:** 2026-03-18 — beheer interface v2.0.0 (Eucalyptus)
 **Prioriteit:** Hoog
 **Context:** De groeperingen G1–G9 zijn gedefinieerd en vastgelegd in `FUNCTIONEEL_BEHEER.md`. G1 (Brand Identity: missie, visie, strategie) is geïmplementeerd. G2–G9 moeten nog worden uitgerold.
 
@@ -14,14 +15,14 @@
 | ID | Groep | Status |
 |----|-------|--------|
 | G1 | Brand Identity (missie, visie, strategie) | ✅ Live |
-| G2 | Homepage hero (kopregel, subtitel, CTA) | 🔲 Todo |
-| G3 | Diensten / Aanbod | 🔲 Todo |
-| G4 | Over ons | 🔲 Todo — pagina bevat nog demo-content (Juiceito) |
-| G5 | Shop / Producten | 🔲 Todo |
-| G6 | Contact | 🔲 Todo — pagina bevat nog demo-content (Juiceito) |
-| G7 | Footer | 🔲 Todo |
-| G8 | SEO-teksten (meta title/description per pagina) | 🔲 Todo |
-| G9 | Globale elementen (navigatie, CTA, cookie) | 🔲 Todo |
+| G2 | Homepage hero (kopregel, subtitel, CTA) | ✅ Live |
+| G3 | Diensten / Aanbod | ✅ Live |
+| G4 | Over ons | ✅ Live — pagina bevat nog demo-content (Juiceito) |
+| G5 | Shop / Producten | ✅ Live |
+| G6 | Contact | ✅ Live — pagina bevat nog demo-content (Juiceito) |
+| G7 | Footer | ✅ Live |
+| G8 | SEO-teksten (meta title/description per pagina) | ✅ Live |
+| G9 | Globale elementen (navigatie, CTA, cookie) | ✅ Live |
 
 **Vervolgstap per groep:**
 1. Voeg velden toe aan `MINDBODYNJOY_CONTENT.json` (schema uitbreiding)

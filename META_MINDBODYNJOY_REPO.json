@@ -1,7 +1,7 @@
 {
   "ecosystem": "MindBodyNJoy",
   "master_project": "Meta_MindBodyNJoy",
-  "last_updated": "2026-03-18T12:00:00Z",
+  "last_updated": "2026-03-18T22:50:00Z",
   "projects": [
     {
       "id": "meta",
@@ -10,8 +10,8 @@
       "local_path": "/Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy",
       "github": "https://github.com/cpaglebbeek/Meta_MindBodyNJoy.git",
       "branch": "main",
-      "version": "1.0.0",
-      "codename": "Lavendel",
+      "version": "1.1.0",
+      "codename": "Eucalyptus",
       "status": "active"
     },
     {
@@ -38,8 +38,18 @@
   "content_repo": {
     "file": "MINDBODYNJOY_CONTENT.json",
     "hosted_at": "/beheer/content.json",
-    "schema_version": "1.0",
-    "fields": ["missie", "visie", "strategie"],
+    "schema_version": "1.2",
+    "groups": {
+      "G1": ["missie", "visie", "strategie"],
+      "G2": ["hero_kopregel", "hero_subtitel", "hero_cta"],
+      "G3": ["diensten_oils", "diensten_edelstenen", "diensten_kaarsen"],
+      "G4": ["over_intro", "over_bio"],
+      "G5": ["shop_intro", "shop_categorie"],
+      "G6": ["contact_intro", "contact_adres", "contact_openingstijden"],
+      "G7": ["footer_tagline", "footer_copyright"],
+      "G8": ["seo_home_title", "seo_home_description", "seo_over_title", "seo_over_description", "seo_contact_title", "seo_contact_description"],
+      "G9": ["cta_primair", "cta_secondair", "cookie_tekst"]
+    },
     "max_versions_per_field": 5,
     "beheer_interface": "/beheer/index.html",
     "save_endpoint": "/beheer/save.php"
