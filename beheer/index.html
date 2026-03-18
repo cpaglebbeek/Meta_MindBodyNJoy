@@ -107,6 +107,15 @@
 
         .divider { border: none; border-top: 1px solid #1e293b; margin: 16px 0; }
 
+        /* CI/CD promote */
+        .promote-bar { display: flex; align-items: center; justify-content: space-between; background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.2); border-radius: 8px; padding: 7px 12px; margin-bottom: 14px; gap: 12px; flex-wrap: wrap; }
+        .promote-bar-msg { font-size: 0.78rem; color: #fbbf24; flex: 1; }
+        .btn-promote { background: #78350f; color: #fcd34d; border: 1px solid #fbbf24; padding: 5px 14px; font-size: 0.78rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+        .btn-promote:hover { background: #92400e; }
+        .btn-promote-all { background: #1a1a0a; color: #fcd34d; border: 1px solid #fbbf24; padding: 8px 18px; font-size: 0.83rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+        .btn-promote-all:hover { background: #78350f; }
+        .deployed-date { font-size: 0.68rem; color: #475569; margin-top: 2px; }
+
         /* Active bar */
         .active-bar { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.15); border-radius: 8px; padding: 7px 12px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px; }
         .active-bar-label { color: #3b82f6; font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; padding-top: 1px; flex-shrink: 0; }
@@ -185,7 +194,8 @@
                 <h1>MindBodyNJoy Beheer</h1>
                 <div class="subtitle"><span id="last-updated">Laden...</span> &nbsp;·&nbsp; <span id="beheer-ver" style="color:#475569"></span></div>
             </div>
-            <div style="display:flex;gap:10px;align-items:center">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <button class="btn-promote-all" id="btn-promote-all" onclick="promoteAll()" style="display:none">⬆ Staging → Productie</button>
                 <div class="sync-dot"><span class="dot"></span> CONTENT REPO</div>
                 <button class="btn-logout" onclick="logout()">Uitloggen</button>
             </div>
@@ -195,7 +205,7 @@
 </div>
 
 <script>
-const BEHEER_VERSION = 'v2.0.0';
+const BEHEER_VERSION = 'v2.1.0';
 const CONTENT_URL = './content.json';
 const SAVE_URL    = './save.php';
 const GROUPS = [
@@ -270,6 +280,28 @@ async function loadContent() {
 }
 
 // ── Render alles ─────────────────────────────────────────────────────────────
+function hasPromotableDiff() {
+    if (!content) return false;
+    return Object.values(content.content).some(f =>
+        (f.active_index?.staging ?? 0) !== (f.active_index?.productie ?? 0)
+    );
+}
+
+function updatePromoteAllBtn() {
+    const btn = document.getElementById('btn-promote-all');
+    if (btn) btn.style.display = hasPromotableDiff() ? '' : 'none';
+}
+
+function buildPromoteBarHtml(field) {
+    const f = content.content[field];
+    if ((f.active_index.staging ?? 0) === (f.active_index.productie ?? 0)) return '';
+    const stagV = f.active_index.staging + 1;
+    return `<div class="promote-bar" id="promote-bar-${field}">
+        <span class="promote-bar-msg">⚡ Staging heeft versie ${stagV} — productie heeft versie ${f.active_index.productie + 1}</span>
+        <button class="btn-promote" onclick="promoteField('${field}')">Staging → Productie ↑</button>
+    </div>`;
+}
+
 function renderAll() {
     const container = document.getElementById('cards-container');
     container.innerHTML = '';
@@ -305,6 +337,7 @@ function renderAll() {
     // Groepspreviews renderen na alle cards
     renderG2Preview();
     renderG8Preview();
+    updatePromoteAllBtn();
 }
 
 // ── Card bouwen ──────────────────────────────────────────────────────────────
@@ -369,6 +402,7 @@ function buildCard(field) {
         <div class="card-description">${escapeHtml(f.description)}</div>
 
         ${activeBarHtml}
+        ${buildPromoteBarHtml(field)}
 
         <div class="editor-label" id="edlabel-${field}">Bewerken — Versie ${selIdx + 1} geselecteerd</div>
         ${editorHtml}
@@ -458,17 +492,20 @@ function buildVersionList(field) {
             isProd ? `<span class="vtag vtag-prod">PROD</span>` : '',
             isStag ? `<span class="vtag vtag-stag">STAGING</span>` : ''
         ].join('');
+        const depStag = v.deployed_to?.staging   ? `<div class="deployed-date">Staging: ${new Date(v.deployed_to.staging).toLocaleString('nl-NL')}</div>` : '';
+        const depProd = v.deployed_to?.productie ? `<div class="deployed-date">Productie: ${new Date(v.deployed_to.productie).toLocaleString('nl-NL')}</div>` : '';
 
         return `<div class="version-item ${isSel ? 'selected' : ''}" id="vi-${field}-${i}" onclick="selectVersion('${field}', ${i})">
             <div class="version-meta">
                 <div class="version-num">Versie ${i + 1}</div>
                 <div class="version-preview ${!preview ? 'empty' : ''}">${preview ? escapeHtml(preview) : '(leeg)'}</div>
                 <div class="version-info">${date}${noteHtml}</div>
+                ${depStag}${depProd}
                 ${tags ? `<div class="version-env-tags">${tags}</div>` : ''}
             </div>
             <div class="version-actions">
-                ${!isProd ? `<button class="btn-prod" onclick="event.stopPropagation();activateVersion('${field}',${i},'productie')">→ Productie</button>` : `<span style="font-size:0.7rem;color:#3b82f6;padding:4px 0">✓ Productie</span>`}
-                ${!isStag ? `<button class="btn-stag" onclick="event.stopPropagation();activateVersion('${field}',${i},'staging')">→ Staging</button>` : `<span style="font-size:0.7rem;color:#22c55e;padding:4px 0">✓ Staging</span>`}
+                ${!isProd ? `<button class="btn-prod" onclick="event.stopPropagation();activateVersion('${field}',${i},'productie')">Publiceer</button>` : `<span style="font-size:0.7rem;color:#3b82f6;padding:4px 0">✓ Productie</span>`}
+                ${!isStag ? `<button class="btn-stag" onclick="event.stopPropagation();activateVersion('${field}',${i},'staging')">Test in Staging</button>` : `<span style="font-size:0.7rem;color:#22c55e;padding:4px 0">✓ Staging</span>`}
             </div>
         </div>`;
     }).join('');
@@ -601,6 +638,32 @@ function renderG8Preview() {
     panel.innerHTML = `<div class="preview-label">Live voorbeeld — Zoekresultaten Google</div><div class="seo-snippets">${snippets}</div>`;
 }
 
+// ── Promote field (staging → productie) ─────────────────────────────────────
+async function promoteField(field) {
+    try {
+        const r = await api({ action: 'promote', field });
+        content = r.data;
+        refreshCard(field);
+        toast(`${content.content[field].label} gepromoveerd naar productie ✓`, 'success');
+    } catch(e) { toast('Fout: ' + e.message, 'error'); }
+}
+
+// ── Promote all (alle velden staging → productie) ────────────────────────────
+async function promoteAll() {
+    const btn = document.getElementById('btn-promote-all');
+    if (btn) { btn.disabled = true; btn.textContent = 'Bezig...'; }
+    try {
+        const r = await api({ action: 'promote_all' });
+        content = r.data;
+        Object.keys(content.content).forEach(field => {
+            const card = document.getElementById('card-' + field);
+            if (card) refreshCard(field);
+        });
+        toast('Alle velden gepromoveerd naar productie ✓', 'success');
+    } catch(e) { toast('Fout: ' + e.message, 'error'); }
+    if (btn) { btn.disabled = false; btn.textContent = '⬆ Staging → Productie'; }
+}
+
 // ── Opslaan ──────────────────────────────────────────────────────────────────
 async function saveField(field) {
     const value = document.getElementById(`ta-${field}`).value;
@@ -677,6 +740,23 @@ function refreshCard(field) {
             barEl.style.display = 'none';
         }
     }
+
+    // Promote-bar bijwerken
+    const existingBar = document.getElementById('promote-bar-' + field);
+    const newBarHtml = buildPromoteBarHtml(field);
+    if (existingBar) {
+        if (newBarHtml) {
+            existingBar.outerHTML = newBarHtml;
+        } else {
+            existingBar.remove();
+        }
+    } else if (newBarHtml) {
+        // Invoegen na active-bar (of na card-description als active-bar er niet is)
+        const anchor = document.getElementById('active-bar-' + field) ||
+                       card.querySelector('.card-description');
+        if (anchor) anchor.insertAdjacentHTML('afterend', newBarHtml);
+    }
+    updatePromoteAllBtn();
 
     // Groepspreview
     const group = GROUPS.find(g => g.fields.includes(field));
