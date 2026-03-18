@@ -1,0 +1,8 @@
+[
+  {
+    "version": "1.0.0",
+    "timestamp": "2026-03-18T00:00:00Z",
+    "codename": "Lavendel",
+    "changes": "Initial metaproject setup. Ecosysteem gedefinieerd met Meta_MindBodyNJoy (regie) en MindBodyNJoy (website assets). CLAUDE.md, dashboard en source-of-truth aangemaakt."
+  }
+]

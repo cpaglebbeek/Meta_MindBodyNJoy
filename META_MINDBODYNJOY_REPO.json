@@ -1,0 +1,44 @@
+{
+  "ecosystem": "MindBodyNJoy",
+  "master_project": "Meta_MindBodyNJoy",
+  "last_updated": "2026-03-18T00:00:00Z",
+  "projects": [
+    {
+      "id": "meta",
+      "name": "Meta_MindBodyNJoy",
+      "role": "Master / Regie",
+      "local_path": "/Users/christian/Documents/Gemini_Projects/Meta_MindBodyNJoy",
+      "github": "https://github.com/cpaglebbeek/Meta_MindBodyNJoy.git",
+      "branch": "main",
+      "version": "1.0.0",
+      "codename": "Lavendel",
+      "status": "active"
+    },
+    {
+      "id": "website",
+      "name": "MindBodyNJoy",
+      "role": "Website assets & content",
+      "local_path": "/Users/christian/Documents/MindBodyNJoy",
+      "github": "https://github.com/cpaglebbeek/MindBodyNJoy.git",
+      "branch": "main",
+      "version": "1.0.0",
+      "codename": "Lavendel",
+      "status": "active"
+    }
+  ],
+  "live_site": {
+    "url": "https://mindbodynjoy.nl",
+    "platform": "WordPress",
+    "page_builder": "Elementor v3.35.5",
+    "theme": "Hostinger AI Theme",
+    "ecommerce": "WooCommerce",
+    "hosting": "Hostinger",
+    "language": "nl"
+  },
+  "versioning": {
+    "theme": "Wellness / aromatherapie begrippen",
+    "green": "+0.0.1",
+    "orange": "+0.1.0",
+    "red": "+1.0.0"
+  }
+}

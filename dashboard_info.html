@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindBodyNJoy Ecosystem Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 24px; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        h1 { color: #a78bfa; border-bottom: 2px solid #1e293b; padding-bottom: 12px; text-transform: uppercase; letter-spacing: 2px; font-size: 1.6rem; margin-bottom: 6px; }
+        h2 { color: #34d399; margin-top: 36px; font-size: 1.2rem; border-left: 4px solid #34d399; padding-left: 14px; margin-bottom: 16px; }
+        .subtitle { color: #94a3b8; font-style: italic; font-size: 0.9rem; margin-bottom: 32px; }
+        .card { background: #1e293b; padding: 24px; border-radius: 14px; border: 1px solid #334155; margin-bottom: 24px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        th { background: #0f172a; color: #94a3b8; text-align: left; padding: 11px 14px; border-bottom: 2px solid #334155; font-size: 0.73rem; text-transform: uppercase; letter-spacing: 1px; }
+        td { padding: 11px 14px; border-bottom: 1px solid #1e293b; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(167,139,250,0.06); }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .badge-active { background: #064e3b; color: #34d399; border: 1px solid #34d399; }
+        .badge-planned { background: #1e1b4b; color: #a78bfa; border: 1px solid #a78bfa; }
+        .badge-version { background: #1e293b; color: #60a5fa; border: 1px solid #60a5fa; font-family: monospace; }
+        .badge-codename { background: #1e293b; color: #fbbf24; border: 1px solid #fbbf24; }
+        .sync-status { font-size: 0.72rem; color: #34d399; display: flex; align-items: center; gap: 6px; }
+        .dot { width: 8px; height: 8px; background: #34d399; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .meta-badge { background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .history-item { font-size: 0.8rem; color: #cbd5e1; padding: 8px 0; border-left: 2px solid #fbbf24; padding-left: 12px; margin-bottom: 8px; }
+        .history-version { color: #60a5fa; font-weight: bold; font-family: monospace; }
+        .history-codename { color: #fbbf24; }
+        header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 16px; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <div>
+            <h1>MindBodyNJoy Ecosystem</h1>
+            <p class="subtitle" id="last-updated">Laden...</p>
+        </div>
+        <div class="sync-status">
+            <span class="dot"></span>
+            LINKED TO META_MINDBODYNJOY_REPO.JSON
+        </div>
+    </header>
+
+    <div class="card">
+        <h2>Project Status & Orchestratie</h2>
+        <table id="statusTable">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Rol</th>
+                    <th>Versie</th>
+                    <th>Codenaam</th>
+                    <th>Status</th>
+                    <th>GitHub</th>
+                </tr>
+            </thead>
+            <tbody id="projectRows"></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Live Website</h2>
+        <table id="siteTable">
+            <thead><tr><th>Eigenschap</th><th>Waarde</th></tr></thead>
+            <tbody id="siteRows"></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Versie Geschiedenis</h2>
+        <div id="versionHistory"></div>
+    </div>
+
+</div>
+
+<script>
+fetch('META_MINDBODYNJOY_REPO.json')
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('last-updated').textContent =
+      'Laatst bijgewerkt: ' + new Date(data.last_updated).toLocaleString('nl-NL');
+
+    // Projects
+    const pRows = document.getElementById('projectRows');
+    data.projects.forEach(p => {
+      const isMeta = p.id === 'meta';
+      pRows.innerHTML += `<tr>
+        <td>${isMeta ? '<span class="meta-badge">★ META</span> ' : ''}${p.name}</td>
+        <td style="color:#94a3b8">${p.role}</td>
+        <td><span class="badge badge-version">v${p.version}</span></td>
+        <td><span class="badge badge-codename">${p.codename}</span></td>
+        <td><span class="badge badge-${p.status === 'active' ? 'active' : 'planned'}">${p.status}</span></td>
+        <td><a href="${p.github.replace('.git','')}" target="_blank" style="color:#60a5fa;font-size:0.8rem">${p.github.split('/').pop().replace('.git','')}</a></td>
+      </tr>`;
+    });
+
+    // Live site
+    const site = data.live_site;
+    const sRows = document.getElementById('siteRows');
+    const siteProps = [
+      ['URL', `<a href="${site.url}" target="_blank" style="color:#a78bfa">${site.url}</a>`],
+      ['Platform', site.platform],
+      ['Page Builder', site.page_builder],
+      ['Thema', site.theme],
+      ['E-commerce', site.ecommerce],
+      ['Hosting', site.hosting],
+      ['Taal', site.language.toUpperCase()],
+    ];
+    siteProps.forEach(([k,v]) => {
+      sRows.innerHTML += `<tr><td style="color:#94a3b8;width:200px">${k}</td><td>${v}</td></tr>`;
+    });
+  });
+
+fetch('versions.json')
+  .then(r => r.json())
+  .then(versions => {
+    const container = document.getElementById('versionHistory');
+    versions.slice().reverse().forEach(v => {
+      container.innerHTML += `<div class="history-item">
+        <span class="history-version">v${v.version}</span>
+        <span class="history-codename"> — ${v.codename}</span>
+        <span style="color:#64748b; font-size:0.75rem;"> (${new Date(v.timestamp).toLocaleDateString('nl-NL')})</span>
+        <div style="margin-top:4px">${v.changes}</div>
+      </div>`;
+    });
+  });
+</script>
+</body>
+</html>

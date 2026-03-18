@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Node (toekomstig gebruik)
+node_modules/
+dist/
+
+# Logs
+*.log
+
+# Office tijdelijke bestanden
+~$*
