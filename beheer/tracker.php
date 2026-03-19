@@ -60,6 +60,25 @@ $wp_headers = [
     'From: MindBodyNJoy Tracker <noreply@mindbodynjoy.nl>',
 ];
 
+// WhatsApp configuratie (CallMeBot)
+define('WA_PHONE', '31626463426');
+define('WA_APIKEY', '1234567');
+
+function sendWhatsApp($message) {
+    $url = 'https://api.callmebot.com/whatsapp.php?'
+         . 'phone=' . WA_PHONE
+         . '&text=' . urlencode($message)
+         . '&apikey=' . WA_APIKEY;
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 10,
+        CURLOPT_SSL_VERIFYPEER => true,
+    ]);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
 // ============================================================
 // CLICK RAPPORT
 // ============================================================
@@ -147,6 +166,15 @@ HTML;
 
     $subject = 'Klik op "' . mb_substr(strip_tags($data['elementText'] ?? '?'), 0, 40) . '" — ' . date('d-m-Y H:i');
     wp_mail($to, $subject, $html, $wp_headers);
+
+    // WhatsApp notificatie
+    $wa_msg = "👆 *MindBodyNJoy — Klik*\n"
+            . "Element: {$element_text}\n"
+            . "Sectie: {$section}\n"
+            . "Pagina: {$page}\n"
+            . "IP: {$ip}\n"
+            . "Tijd: " . date('d-m-Y H:i');
+    sendWhatsApp($wa_msg);
 
     http_response_code(204);
     exit;
@@ -309,6 +337,15 @@ HTML;
 
 $subject = 'Bezoek mindbodynjoy.nl — ' . date('d-m-Y H:i');
 wp_mail($to, $subject, $html, $wp_headers);
+
+// WhatsApp notificatie
+$wa_msg = "🌿 *MindBodyNJoy — Bezoek*\n"
+        . "Pagina: {$page}\n"
+        . "IP: {$ip}\n"
+        . "Platform: {$platform}\n"
+        . "Taal: {$language}\n"
+        . "Tijd: " . date('d-m-Y H:i');
+sendWhatsApp($wa_msg);
 
 http_response_code(204);
 exit;
