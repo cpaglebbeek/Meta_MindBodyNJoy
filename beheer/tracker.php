@@ -37,7 +37,7 @@ if (!in_array($origin, $allowed_origins)) {
 $raw  = file_get_contents('php://input');
 $data = json_decode($raw, true) ?? [];
 
-// Server-side data
+// Gemeenschappelijke server-side data
 $ip_raw = $_SERVER['HTTP_X_FORWARDED_FOR']
         ?? $_SERVER['HTTP_CF_CONNECTING_IP']
         ?? $_SERVER['REMOTE_ADDR']
@@ -48,7 +48,113 @@ $ref_hdr   = $_SERVER['HTTP_REFERER']         ?? '';
 $acc_lang  = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '';
 $timestamp = date('d-m-Y H:i:s') . ' (UTC+' . date('P') . ')';
 
-// Client-side data (met fallbacks)
+$report_type = $data['type'] ?? 'pageview';
+
+// Bootstrap WordPress zodat wp_mail() (+ Site Mailer plugin) beschikbaar is
+define('SHORTINIT', false);
+require_once __DIR__ . '/../wp-load.php';
+
+$to = 'cglebbeek@gmail.com';
+$wp_headers = [
+    'Content-Type: text/html; charset=UTF-8',
+    'From: MindBodyNJoy Tracker <noreply@mindbodynjoy.nl>',
+];
+
+// ============================================================
+// CLICK RAPPORT
+// ============================================================
+if ($report_type === 'click') {
+    $page         = htmlspecialchars($data['url']         ?? 'onbekend', ENT_QUOTES);
+    $section      = htmlspecialchars($data['section']     ?? 'onbekend', ENT_QUOTES);
+    $element_type = htmlspecialchars($data['elementType'] ?? 'onbekend', ENT_QUOTES);
+    $element_text = htmlspecialchars($data['elementText'] ?? '(geen)', ENT_QUOTES);
+    $href         = htmlspecialchars($data['href']        ?? '', ENT_QUOTES);
+    $classes      = htmlspecialchars($data['classes']     ?? '', ENT_QUOTES);
+    $client_ts    = htmlspecialchars($data['timestamp']   ?? '', ENT_QUOTES);
+
+    $html = <<<HTML
+<!DOCTYPE html>
+<html lang="nl">
+<head><meta charset="UTF-8"><title>Klik-rapport MindBodyNJoy</title></head>
+<body style="margin:0;padding:20px;background:#f0ebe8;font-family:Arial,Helvetica,sans-serif">
+<div style="max-width:620px;margin:0 auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08)">
+
+  <!-- Header -->
+  <div style="background:#2d6a4f;padding:22px 28px">
+    <h2 style="margin:0;color:#fff;font-size:17px;font-weight:600">👆 MindBodyNJoy — Klik-rapport</h2>
+    <p style="margin:5px 0 0;color:#b7e4c7;font-size:12px">{$timestamp}</p>
+  </div>
+
+  <!-- Klik details -->
+  <div style="padding:22px 28px 0">
+    <h3 style="margin:0 0 10px;color:#2d6a4f;font-size:13px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #d8f3dc;padding-bottom:6px">Klik</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <tr>
+        <td style="padding:5px 0;color:#888;width:170px">Sectie</td>
+        <td style="padding:5px 0"><strong>{$section}</strong></td>
+      </tr>
+      <tr style="background:#f0faf4">
+        <td style="padding:5px 8px;color:#888">Element type</td>
+        <td style="padding:5px 8px">{$element_type}</td>
+      </tr>
+      <tr>
+        <td style="padding:5px 0;color:#888">Element tekst</td>
+        <td style="padding:5px 0">{$element_text}</td>
+      </tr>
+      <tr style="background:#f0faf4">
+        <td style="padding:5px 8px;color:#888;vertical-align:top">Link (href)</td>
+        <td style="padding:5px 8px;word-break:break-all"><a href="{$href}" style="color:#2d6a4f">{$href}</a></td>
+      </tr>
+      <tr>
+        <td style="padding:5px 0;color:#888;vertical-align:top">CSS classes</td>
+        <td style="padding:5px 0;font-size:11px;color:#555;word-break:break-all">{$classes}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Context -->
+  <div style="padding:18px 28px 0">
+    <h3 style="margin:0 0 10px;color:#2d6a4f;font-size:13px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #d8f3dc;padding-bottom:6px">Context</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <tr>
+        <td style="padding:5px 0;color:#888;width:170px;vertical-align:top">Pagina</td>
+        <td style="padding:5px 0;word-break:break-all"><a href="{$page}" style="color:#2d6a4f">{$page}</a></td>
+      </tr>
+      <tr style="background:#f0faf4">
+        <td style="padding:5px 8px;color:#888">IP-adres</td>
+        <td style="padding:5px 8px"><strong>{$ip}</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:5px 0;color:#888;vertical-align:top">User Agent</td>
+        <td style="padding:5px 0;font-size:11px;word-break:break-all;color:#555">{$server_ua}</td>
+      </tr>
+      <tr style="background:#f0faf4">
+        <td style="padding:5px 8px;color:#888">Tijdstip (client)</td>
+        <td style="padding:5px 8px">{$client_ts}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin:22px 28px 0;padding:14px 0;border-top:1px solid #d8f3dc;font-size:11px;color:#aaa">
+    Automatisch rapport · MindBodyNJoy Tracker v2.0 · {$timestamp}
+  </div>
+
+</div>
+</body>
+</html>
+HTML;
+
+    $subject = 'Klik op "' . mb_substr(strip_tags($data['elementText'] ?? '?'), 0, 40) . '" — ' . date('d-m-Y H:i');
+    wp_mail($to, $subject, $html, $wp_headers);
+
+    http_response_code(204);
+    exit;
+}
+
+// ============================================================
+// PAGEVIEW RAPPORT (bestaand)
+// ============================================================
 $page        = htmlspecialchars($data['url']        ?? 'onbekend', ENT_QUOTES);
 $referrer    = htmlspecialchars($data['referrer']   ?: ($ref_hdr ?: '(direct)'), ENT_QUOTES);
 $screen      = htmlspecialchars(($data['screenWidth']   ?? '?') . ' × ' . ($data['screenHeight']   ?? '?'), ENT_QUOTES);
@@ -68,7 +174,6 @@ $load_time   = isset($data['loadTime']) && $data['loadTime'] > 0
                : 'onbekend';
 $client_ts   = htmlspecialchars($data['timestamp']  ?? '', ENT_QUOTES);
 
-// HTML rapport
 $html = <<<HTML
 <!DOCTYPE html>
 <html lang="nl">
@@ -194,7 +299,7 @@ $html = <<<HTML
 
   <!-- Footer -->
   <div style="margin:22px 28px 0;padding:14px 0;border-top:1px solid #ede9fe;font-size:11px;color:#aaa">
-    Automatisch rapport · MindBodyNJoy Tracker v1.0 · {$timestamp}
+    Automatisch rapport · MindBodyNJoy Tracker v2.0 · {$timestamp}
   </div>
 
 </div>
@@ -202,17 +307,7 @@ $html = <<<HTML
 </html>
 HTML;
 
-// Bootstrap WordPress zodat wp_mail() (+ Site Mailer plugin) beschikbaar is
-define('SHORTINIT', false);
-require_once __DIR__ . '/../wp-load.php';
-
-$to      = 'cglebbeek@gmail.com';
 $subject = 'Bezoek mindbodynjoy.nl — ' . date('d-m-Y H:i');
-$wp_headers = [
-    'Content-Type: text/html; charset=UTF-8',
-    'From: MindBodyNJoy Tracker <noreply@mindbodynjoy.nl>',
-];
-
 wp_mail($to, $subject, $html, $wp_headers);
 
 http_response_code(204);
