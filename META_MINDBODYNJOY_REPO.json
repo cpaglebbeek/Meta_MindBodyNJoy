@@ -1,7 +1,7 @@
 {
   "ecosystem": "MindBodyNJoy",
   "master_project": "Meta_MindBodyNJoy",
-  "last_updated": "2026-03-19T00:00:00Z",
+  "last_updated": "2026-03-19T01:00:00Z",
   "projects": [
     {
       "id": "meta",
@@ -32,9 +32,12 @@
       "local_path": "/Users/christian/Documents/Gemini_Projects/JoyAdministratie",
       "github": "https://github.com/cpaglebbeek/JoyAdministratie.git",
       "branch": "main",
-      "version": "1.0.0",
-      "codename": "Rozemarijn",
-      "status": "active"
+      "version": "2.0.0",
+      "codename": "Ceder",
+      "status": "active",
+      "live_url": "https://mindbodynjoy.nl/Administratie/",
+      "deploy_procedure": "TB-004",
+      "pending": "GitHub remote aanmaken (cpaglebbeek/JoyAdministratie) + git push; config.local.php met Anthropic API-sleutel op server"
     }
   ],
   "live_site": {

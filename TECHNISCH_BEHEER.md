@@ -191,3 +191,50 @@ git push
 - Eerste deploy naar staging: zie TB-002 uitvoering
 
 ---
+
+## TB-004 · Deploy JoyAdministratie — mindbodynjoy.nl/Administratie/
+
+### Beschrijving
+Deploy van de JoyAdministratie app naar productie op Hostinger.
+Doelmap: `public_html/Administratie/`
+
+### Deploy commando
+```bash
+rsync -avz \
+  -e "ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger" \
+  --include="index.html" \
+  --include="engine.js" \
+  --include="fields.json" \
+  --include="ai_prompts.json" \
+  --include="JOYADMIN_DESIGN_SYSTEM.json" \
+  --include="JOYADMIN_KENNISBANK.json" \
+  --include="api.php" \
+  --include=".htaccess" \
+  --exclude="*" \
+  /Users/christian/Documents/Gemini_Projects/JoyAdministratie/ \
+  u753337840@92.113.19.221:~/domains/mindbodynjoy.nl/public_html/Administratie/
+```
+
+### Eenmalige server-configuratie
+Na eerste deploy: `config.local.php` aanmaken op de server via SSH of hPanel File Manager:
+```php
+<?php
+define('ANTHROPIC_API_KEY', 'sk-ant-...');
+define('JOYADMIN_PASSWORD', 'kies-een-sterk-wachtwoord');
+```
+Dit bestand staat NOOIT in git en is geblokkeerd via `.htaccess`.
+
+### Schrijfrechten clients.json
+```bash
+ssh -p 65002 -i ~/.ssh/mindbodynjoy_hostinger u753337840@92.113.19.221 \
+  "touch ~/domains/mindbodynjoy.nl/public_html/Administratie/clients.json && \
+   chmod 664 ~/domains/mindbodynjoy.nl/public_html/Administratie/clients.json"
+```
+
+### Status
+- Eerste deploy: ✅ 2026-03-19
+- Live URL: https://mindbodynjoy.nl/Administratie/
+- GitHub remote: ⏳ nog aan te maken (cpaglebbeek/JoyAdministratie)
+- config.local.php met API-sleutel: ⏳ nog in te vullen
+
+---
