@@ -202,16 +202,18 @@ $html = <<<HTML
 </html>
 HTML;
 
+// Bootstrap WordPress zodat wp_mail() (+ Site Mailer plugin) beschikbaar is
+define('SHORTINIT', false);
+require_once __DIR__ . '/../wp-load.php';
+
 $to      = 'cglebbeek@gmail.com';
 $subject = 'Bezoek mindbodynjoy.nl — ' . date('d-m-Y H:i');
-$headers = implode("\r\n", [
-    'MIME-Version: 1.0',
+$wp_headers = [
     'Content-Type: text/html; charset=UTF-8',
     'From: MindBodyNJoy Tracker <noreply@mindbodynjoy.nl>',
-    'X-Mailer: PHP/' . phpversion(),
-]);
+];
 
-mail($to, $subject, $html, $headers);
+wp_mail($to, $subject, $html, $wp_headers);
 
 http_response_code(204);
 exit;
