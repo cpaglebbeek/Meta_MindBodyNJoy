@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.4.0",
+    "timestamp": "2026-03-19T00:00:00Z",
+    "codename": "Salie",
+    "changes": "Bezoekersrapport feature — tracker.php toegevoegd aan /beheer/. Verzamelt IP, user agent, schermresolutie, viewport, taal, tijdzone, verbindingstype, laadtijd, referrer en privacy-instellingen. Mailt HTML-rapport naar cglebbeek@gmail.com via PHP mail(). WordPress JS-snippet via Elementor Custom Code."
+  },
+  {
+    "version": "1.3.0",
+    "timestamp": "2026-03-19T01:00:00Z",
+    "codename": "Ceder",
+    "changes": "JoyAdministratie GitHub remote aangemaakt (cpaglebbeek/JoyAdministratie) en eerste push gedaan."
+  },
+  {
     "version": "1.2.0",
     "timestamp": "2026-03-18T23:30:00Z",
     "codename": "Bergamot",
